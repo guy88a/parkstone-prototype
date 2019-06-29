@@ -19,6 +19,7 @@ export default class Unit extends GameObject {
         this.enemy   = false;
         this.jumping = false;
         this.hitting = false;
+        this.grv     = true;
 
         this.settings = {
             spritesheet: {
@@ -31,7 +32,7 @@ export default class Unit extends GameObject {
     }
 
     // Setters
-    set health(health) {
+    set unitHealth(health) {
         this.health = health;
     }
 
@@ -56,7 +57,7 @@ export default class Unit extends GameObject {
     }
 
     // Getters
-    set health() {
+    get unitHealth() {
         return this.health;
     }
 

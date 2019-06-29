@@ -11,17 +11,19 @@ const DEFAULTS = {
     source: '_.png',
     position: { x: 0, y: 0 },
     collision: false,
+    gravity: false,
     velocity: { x: 0, y: 0 },
     animated: false
 }
 
 // Main ==================================================================== //
 export default class GameObject {
-    constructor(source = DEFAULTS.source, position = DEFAULTS.position, collision = DEFAULTS.collision, velocity = DEFAULTS. velocity, animated = DEFAULTS.animated) {
+    constructor(source = DEFAULTS.source, position = DEFAULTS.position, collision = DEFAULTS.collision, gravity = DEFAULTS.gravity, velocity = DEFAULTS. velocity, animated = DEFAULTS.animated) {
         log('Constructing a new Game Object', 'info');
         this.src    = source;
         this.pos    = position;
         this.col    = collision;
+        this.grv    = gravity;
         this.vel    = velocity;
         this.anim   = animated;
     }
