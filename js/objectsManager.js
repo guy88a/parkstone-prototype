@@ -121,15 +121,27 @@ function GameObjectMapper(objectArray) {
 
 // Misc ==================================================================== //
 function updateUnitProp(name, prop, value) {
-    return GameObjects.Units.get(name)[prop] = value;
+    if(GameObjects.Units.get(name).hasOwnPeoperty(prop)) {
+        return GameObjects.Units.get(name)[prop] = value;
+    } else {
+        log(`invalid unit's property name: ${prop}`);
+    }
 }
 
 function updateObjectProp(name, prop, value) {
-    return GameObjects.Objects.get(name)[prop] = value;
+    if(GameObjects.Objects.get(name).hasOwnPeoperty(prop)) {
+        return GameObjects.Objects.get(name)[prop] = value;
+    } else {
+        log(`invalid object's property name: ${prop}`);
+    }
 }
 
 function updateAssetProp(name, prop, value) {
-    return GameObjects.Assets.get(name)[prop] = value;
+    if(GameObjects.Assets.get(name).hasOwnPeoperty(prop)) {
+        return GameObjects.Assets.get(name)[prop] = value;
+    } else {
+        log(`invalid asset's property name: ${prop}`);
+    }
 }
 
 function getUnitTypeByName(name) {
