@@ -1,0 +1,73 @@
+// VARIABLES ------------------------------------------- //
+$body-bg: #222;
+$logs-bg: rgb(22, 22, 22);
+$logs-border: rgb(73, 73, 73);
+$canvas-bg: #afe2ff;
+
+// GENERAL --------------------------------------------- //
+.full {
+    width: 100%;
+    height: 100%;
+}
+
+// MAIN ------------------------------------------------ //
+.game-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    font-family: 'Open Sans';
+
+    background-color: $body-bg;
+}
+
+.main-scene {
+    position: relative;
+    width: 1400px;
+    height: 800px;
+
+    &__logs {
+        position: absolute;
+        width: 150px;
+        height: 28px;
+        top: 2px;
+        left: 2px;
+        padding: 5px;
+
+        color: #e2e2e2;
+        font-size: 12px;
+        line-height: 15px;
+        text-align: center;
+
+        background-color: $logs-bg;
+        border: 2px solid $logs-border;
+        box-sizing: border-box;
+        
+    }
+
+    &__canvas {
+        background-color: $canvas-bg;
+    }
+
+    .logo {
+        position: absolute;
+        width: 65px;
+        height: 65px;
+        left: -70px;
+
+        background-color: $logs-bg;
+        background-image: url(../images/Logo.png);
+        background-size: 80%;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        border: 2px solid $logs-border;
+        box-sizing: border-box;
+    }
+}
+
+// Misc ------------------------------------------------ //
+

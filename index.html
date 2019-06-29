@@ -1,0 +1,30 @@
+<!doctype html>
+
+<html class="full" lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Parkstone Prototype</title>
+        <meta name="description" content="Parkstone game prototype">
+        <meta name="author" content="Hightechaston">
+
+        <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32" />
+
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+
+    <body class="game-body">
+        <div id="main-scene" class="main-scene">
+            <div class="logo"></div>
+            <div class="main-scene__logs">
+                <span id="fps-log"></span>
+                &nbsp;&nbsp;
+                <span id="chill-log"></span>
+            </div>
+            <canvas id="game-canvas" class="main-scene__canvas" width="1400" height="800"></canvas>
+        </div>
+
+        <script type="module" src="js/index.js"></script>
+    </body>
+</html>

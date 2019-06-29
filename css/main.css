@@ -1,0 +1,63 @@
+.full {
+  width: 100%;
+  height: 100%;
+}
+
+.game-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: 'Open Sans';
+  background-color: #222;
+}
+
+.main-scene {
+  position: relative;
+  width: 1400px;
+  height: 800px;
+}
+
+.main-scene__logs {
+  position: absolute;
+  width: 150px;
+  height: 28px;
+  top: 2px;
+  left: 2px;
+  padding: 5px;
+  color: #e2e2e2;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  background-color: #161616;
+  border: 2px solid #494949;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.main-scene__canvas {
+  background-color: #afe2ff;
+}
+
+.main-scene .logo {
+  position: absolute;
+  width: 65px;
+  height: 65px;
+  left: -70px;
+  background-color: #161616;
+  background-image: url(../images/Logo.png);
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 2px solid #494949;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+/*# sourceMappingURL=main.css.map */
