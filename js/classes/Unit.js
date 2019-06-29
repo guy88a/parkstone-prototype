@@ -15,32 +15,40 @@ export default class Unit extends GameObject {
     constructor() {
         super();
         log('Constructing a new Character', 'info');
+        this.health  = 1;
         this.enemy   = false;
         this.jumping = false;
         this.hitting = false;
-        
-        if(!this.anim) { return; }
 
         this.settings = {
             spritesheet: {
                 sourceSize: { w: 0, h:0 },
-                frameSize: { w: 0, h:0 }
+                frameSize: { w: 0, h:0 },
+                step: 1000 / 40
             },
             animation: {}
         }
     }
 
     // Setters
-    set isEnemy(isEnemy = true) {
+    set health(health) {
+        this.health = health;
+    }
+
+    set isEnemy(isEnemy) {
         this.enemy = isEnemy;
     }
 
-    set isJumping(isJumping = true) {
+    set isJumping(isJumping) {
         this.jumping = isJumping;
     }
     
-    set isHitting(isHitting = true) {
+    set isHitting(isHitting) {
         this.hitting = isHitting;
+    }
+
+    set spritesheetSettings(settings = this.settings.spritesheet) {
+        this.settings.spritesheet = settings;
     }
 
     set animationSettings(settings = {}) {
@@ -48,6 +56,10 @@ export default class Unit extends GameObject {
     }
 
     // Getters
+    set health() {
+        return this.health;
+    }
+
     get isEnemy() {
         return this.enemy;
     }
@@ -65,9 +77,17 @@ export default class Unit extends GameObject {
     }
 
     // Methods
+    isAlive(value = this.health) {
+        return this.health = Number(value);
+    }
+
     spritesheetSize(type = 'source', w = this.settings.spritesheet[`${type}Size`].w, h = this.settings.spritesheet[`${type}Size`].h) {
         this.settings.spritesheet[`${type}Size`].w = w;
         this.settings.spritesheet[`${type}Size`].h = h;
         return this.settings.spritesheet[`${type}Size`];
+    }
+
+    spritesheetStep(stepRate = this.settings.spritesheet.step) {
+        return this.settings.spritesheet.step = stepRate;
     }
 }
