@@ -33,13 +33,17 @@ export default function getImageData(fileName) {
  * @param {String} fileName | full file name (path excluded)
  */
 function getImageName(fileName) {
-    if(isValidFilename(fileName))
-    return fileName.split('.').slice(0, -1).join('.');
+    if(isValidFilename(fileName)) {
+        return fileName.split('.').slice(0, -1).join('.');
+    } else {
+        log(`invalid file name: ${fileName}`, 'error');
+    }
 }
 
 /**
  * generate a unit's name by image's name
- * @param {*} imageName | file name (extension excluded)
+ * - returns { animated, collision, spritesheet, type }
+ * @param {String} imageName | file name (extension excluded)
  */
 function getDataFromName(imageName) {
     let data = {};
