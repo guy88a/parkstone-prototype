@@ -27,23 +27,23 @@ export default class GameObject {
     }
 
     // Setters
-    set source(source = '') {
+    set source(source) {
         this.src = source;
     }
     
-    set position(position = { x: 0, y: 0 }) {
+    set position(position) {
         this.pos = position;
     }
     
-    set collision(collision = false) {
+    set collision(collision) {
         this.col = collision;
     }
     
-    set velocity(velocity = { x: 0, y: 0 }) {
+    set velocity(velocity) {
         this.vel = velocity;
     }
 
-    set isAnimating(isAnimating = true) {
+    set isAnimating(isAnimating) {
         this.animating = isAnimating;
     }
 

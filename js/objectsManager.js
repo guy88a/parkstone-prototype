@@ -30,6 +30,10 @@ export function getGameObjects() {
     return GameObjects;
 }
 
+export function getGameObject(type, name) {
+    return GameObjects[type].get(name);
+}
+
 
 // Generators ============================================================== //
 function createNewUnit({source, position, collision, velocity, animated}) {
