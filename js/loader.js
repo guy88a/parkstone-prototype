@@ -36,6 +36,14 @@ export function getGameAssets(status = '') {
            status === 'loaded' ? gameAssets.loaded : gameAssets;
 }
 
+/**
+ * get the Image of a loaded asset
+ * @param {String} name | asset's name
+ */
+export function getLoadedAsset(name) {
+    return gameAssets.loaded[name];
+}
+
 // Misc ==================================================================== //
 /**
  * load all assets to the scene

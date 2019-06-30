@@ -8,7 +8,7 @@ import log from '../log.js';
 
 // Config ================================================================== //
 const DEFAULTS = {
-    source: '_.png',
+    image: new Image(),
     position: { x: 0, y: 0 },
     collision: false,
     gravity: false,
@@ -18,9 +18,11 @@ const DEFAULTS = {
 
 // Main ==================================================================== //
 export default class GameObject {
-    constructor(source = DEFAULTS.source, position = DEFAULTS.position, collision = DEFAULTS.collision, gravity = DEFAULTS.gravity, velocity = DEFAULTS. velocity, animated = DEFAULTS.animated) {
+    constructor(image = DEFAULTS.image, position = DEFAULTS.position, collision = DEFAULTS.collision, gravity = DEFAULTS.gravity, velocity = DEFAULTS. velocity, animated = DEFAULTS.animated) {
         log('Constructing a new Game Object', 'info');
-        this.src    = source;
+        this.img    = image;
+        this.w      = image.width;
+        this.h      = image.width;
         this.pos    = position;
         this.col    = collision;
         this.grv    = gravity;
@@ -29,8 +31,16 @@ export default class GameObject {
     }
 
     // Setters
-    set source(source) {
-        this.src = source;
+    set image(source) {
+        this.img = image;
+    }
+
+    set width(width) {
+        this.w = width;
+    }
+
+    set height(height) {
+        this.h = height;
     }
     
     set position(position) {
@@ -50,8 +60,16 @@ export default class GameObject {
     }
 
     // Getters
-    get source() {
-        return this.src;
+    get image() {
+        return this.img;
+    }
+
+    get width() {
+        return this.w;
+    }
+
+    get height() {
+        return this.h;
     }
 
     get position() {
@@ -68,5 +86,10 @@ export default class GameObject {
 
     get isAnimating() {
         return this.animating;
+    }
+
+    // Methods
+    draw(context) {
+        context.drawImage(this.src, this.pos.x, this.pos.y, this.w, this.h);
     }
 }

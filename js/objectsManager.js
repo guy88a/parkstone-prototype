@@ -6,6 +6,7 @@
 
 // Imports ================================================================= //
 import log from './log.js';
+import { getLoadedAsset } from './loader.js';
 import GameObject from './classes/GameObject.js';
 import Unit from './classes/Unit.js';
 
@@ -63,18 +64,18 @@ export function getGameObject(type, name) {
 
 
 // Generators ============================================================== //
-function createNewUnit({source, position, collision, velocity, animated}) {
-    return new Unit(source, position, collision, velocity, animated);
+function createNewUnit({image, position, collision, velocity, animated}) {
+    return new Unit(image, position, collision, velocity, animated);
 }
 
 
-function createNewObject({source, position, collision, velocity, animated}) {
-    return new GameObject(source, position, collision, velocity, animated);
+function createNewObject({image, position, collision, velocity, animated}) {
+    return new GameObject(image, position, collision, velocity, animated);
 }
 
 
-function createNewAsset({source, position, animated}) {
-    return new GameObject(source, position, false, false, animated);
+function createNewAsset({image, position, animated}) {
+    return new GameObject(image, position, false, false, animated);
 }
 
 /**
@@ -115,8 +116,9 @@ function GameObjectMapper(objectArray) {
     let type = objectArray[0];
     let name = objectArray[1];
     let params = objectArray[2];
+    let ObjectImage = getLoadedAsset(name);
     GameObjectsTypes[name] = type;
-    GameObjects[`${type}s`].set(name, newGameObject(type, params));
+    GameObjects[`${type}s`].set(name, newGameObject(type, { ObjectImage, ...params}));
 }
 
 // Misc ==================================================================== //

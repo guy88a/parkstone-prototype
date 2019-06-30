@@ -25,6 +25,7 @@ export default class Unit extends GameObject {
             spritesheet: {
                 sourceSize: { w: 0, h:0 },
                 frameSize: { w: 0, h:0 },
+                pos: { x:0, y:0 },
                 step: 1000 / 40
             },
             animation: {}
@@ -78,6 +79,17 @@ export default class Unit extends GameObject {
     }
 
     // Methods
+    draw(context) {
+        context.drawImage(
+            this.src,
+            this.settings.spritesheet.pos.x,
+            this.settings.spritesheet.pos.y,
+            this.settings.spritesheet.frameSize.w,
+            this.settings.spritesheet.frameSize.y,
+            this.pos.x, this.pos.y, this.w, this.h
+            );
+    }
+
     isAlive(value = this.health) {
         return this.health = Number(value);
     }
