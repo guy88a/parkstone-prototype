@@ -11,6 +11,7 @@ import log from '../log.js';
 const keyByChar = {
     a: "animated",
     c: "collision",
+    p: "physics",
     s: "spritesheet",
     t: "type",
 }

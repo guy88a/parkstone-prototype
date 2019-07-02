@@ -18,7 +18,7 @@ export default function initInputManager() {
     log('Input Manager initiated', 'info');
 }
 
-export function mapHandlers(typeArray, callbacksArray) {
+export function inputMapHandlers(typeArray, callbacksArray) {
     if(typeArray.length == callbacksArray.length) {
         log('Mapping events handlers', 'info');
         mapEventsHandlers(typeArray, callbacksArray);
