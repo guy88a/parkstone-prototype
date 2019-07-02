@@ -25,12 +25,6 @@ function onLoadInvoker() {
     initInputManager();
 }
 
-defineAssets([IMG_GROUND, IMG_BACKGROUND, IMG_CLOUDS, IMG_UNIT]);
-initGame(onLoadInvoker);
-
-function a() { log('function a') }
-function b() { log('function b') }
-
 var gameObjsArr = [
     ['Unit', 'Uther', {}],
     ['Unit', 'Enemy', {}],
@@ -38,7 +32,14 @@ var gameObjsArr = [
     ['Asset', 'Clouds', {}]
 ]
 
-initObjectsManager(gameObjsArr);
+defineAssets([IMG_GROUND, IMG_BACKGROUND, IMG_CLOUDS, IMG_UNIT]);
+initGame(onLoadInvoker);
+
+initObjectsManager(gameObjsArr); // must invoke after assets were loaded, and before game loop  was initiated
+
+function a() { log('function a') }
+function b() { log('function b') }
+
 var gom = getGameObjects();
 var testse = 0;
 

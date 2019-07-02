@@ -12,8 +12,8 @@ const DEFAULTS = {}
 
 // Main ==================================================================== //
 export default class Unit extends GameObject {
-    constructor() {
-        super();
+    constructor(...args) {
+        super(...args);
         log('Constructing a new Character', 'info');
         this.health  = 1;
         this.enemy   = false;

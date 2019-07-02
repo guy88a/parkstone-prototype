@@ -5,6 +5,7 @@
 
  // Imports ================================================================ //
  import log from './log.js';
+ import { capFirstChar, } from './utils/filename.js';
 
  // Config ================================================================= //
 const IMG_MAIN_PATH = '../images/';
@@ -31,17 +32,17 @@ export default function invokeLoader(gameAssetsArray = []) {
     }
 }
 
-export function getGameAssets(status = '') {
-    return status === 'load' ? gameAssets.toLoad :
-           status === 'loaded' ? gameAssets.loaded : gameAssets;
+export function getGameAssets(status = '', name) {
+    return status === 'load' ? name ? gameAssets.toLoad[capFirstChar(name)] : gameAssets.toLoad :
+           status === 'loaded' ? name ? gameAssets.loaded[capFirstChar(name)] : gameAssets.loaded : gameAssets;
 }
 
 /**
  * get the Image of a loaded asset
  * @param {String} name | asset's name
  */
-export function getLoadedAsset(name) {
-    return gameAssets.loaded[name];
+export function getLoadedAsset(name = "") {
+    return gameAssets.loaded[capFirstChar(name)];
 }
 
 // Misc ==================================================================== //
@@ -68,7 +69,7 @@ function loadAsset(asset) {
     let image = new Image();
     image.onload = onAssetLoad;
     image.src = getAssetPath(asset);
-    getGameAssets().loaded[getUnitName(getImageName(asset))] = image;
+    getGameAssets().loaded[getAssetName(getImageName(asset))] = image;
 }
 
 /**
@@ -129,7 +130,7 @@ function getImageName(fileName) {
  * generate a unit's name by image's name
  * @param {*} imageName | file name (extension excluded)
  */
-function getUnitName(imageName) {
+function getAssetName(imageName) {
     let name = imageName;
     if(name.includes('_')) {
         name = name.split('_')[0];
@@ -137,5 +138,5 @@ function getUnitName(imageName) {
             name = name.split('--')[1];
         }
     }
-    return name;
+    return capFirstChar(name);
 }

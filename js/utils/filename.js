@@ -5,7 +5,7 @@
  */
 
 // Imports ================================================================= //
-import log from './log.js';
+import log from '../log.js';
 
 // Config ================================================================== //
 const keyByChar = {
@@ -22,6 +22,10 @@ const keyByChar = {
  */
 export default function getImageData(fileName) {
     return getDataFromName(getImageName(fileName));
+}
+
+export function capFirstChar(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 // Setters & Getters ======================================================= //

@@ -169,7 +169,7 @@ function stepUpdate() {
 // Draw ==================================================================== //
 function draw(interp, ctx = CTX) {
     let imageLeft = (unitLastPos + (unitPos - unitLastPos) * interp);
-    let img = getGameAssets('loaded')['uther'];
+    let img = getGameAssets('loaded')['Uther'];
     clearCanvas();
     drawBackground();
     ctx.drawImage(img ,0, 0, 169, 205, imageLeft, 550, 169, 205);
@@ -182,9 +182,9 @@ function clearCanvas(canvas = EL_CANVAS, ctx = CTX) {
 }
 
 function drawBackground(ctx = CTX) {
-    const background = getGameAssets('loaded')['background'];
-    const ground = getGameAssets('loaded')['ground'];
-    const clouds = getGameAssets('loaded')['clouds'];
+    const background = getGameAssets('loaded','background');
+    const ground = getGameAssets('loaded','ground');
+    const clouds = getGameAssets('loaded','clouds');
     ctx.drawImage(background ,0, 585);
     ctx.drawImage(ground ,0, 655);
     ctx.drawImage(clouds ,0, 50);

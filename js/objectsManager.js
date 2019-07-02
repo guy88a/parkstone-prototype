@@ -118,7 +118,7 @@ function GameObjectMapper(objectArray) {
     let params = objectArray[2];
     let ObjectImage = getLoadedAsset(name);
     GameObjectsTypes[name] = type;
-    GameObjects[`${type}s`].set(name, newGameObject(type, { ObjectImage, ...params}));
+    GameObjects[`${type}s`].set(name, newGameObject(type, { image: ObjectImage, ...params}));
 }
 
 // Misc ==================================================================== //
