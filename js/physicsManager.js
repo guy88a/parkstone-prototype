@@ -5,13 +5,15 @@
 
 // Imports ================================================================= //
 import log from './log.js';
+import Unit from './classes/Unit.js';
 
 // Config ================================================================== //
 let Physics = new Map(
-    ['gravity', true],
     ['force', 1],
-    ['power', 1],
+    ['gravity', true],
+    ['ground', 750],
     ['jumpPower', 1]
+    ['power', 1],
 );
 
 

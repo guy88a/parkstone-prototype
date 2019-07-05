@@ -9,23 +9,35 @@ import log from '../log.js';
 // Config ================================================================== //
 const DEFAULTS = {
     image: new Image(),
-    position: { x: 0, y: 0, last: { x: 0, y: 0 } },
+    position: { x: 0, y: 0 },
+    lastPosition: { x: 0, y: 0 },
     collision: false,
     gravity: false,
+    hangs: false,
     velocity: { x: 0, y: 0 },
     animated: false
 }
 
 // Main ==================================================================== //
 export default class GameObject {
-    constructor(image = DEFAULTS.image, position = DEFAULTS.position, collision = DEFAULTS.collision, gravity = DEFAULTS.gravity, velocity = DEFAULTS. velocity, animated = DEFAULTS.animated) {
+    constructor(image = DEFAULTS.image,
+        position        = DEFAULTS.position,
+        lastPosition    = DEFAULTS.lastPosition,
+        collision       = DEFAULTS.collision,
+        gravity         = DEFAULTS.gravity,
+        hangs           = DEFAULTS.hangs,
+        velocity        = DEFAULTS.velocity,
+        animated        = DEFAULTS.animated
+        ) {
         log('Constructing a new Game Object', 'info');
         this.img    = image;
         this.w      = image.width;
         this.h      = image.height;
         this.pos    = position;
+        this.lpos   = lastPosition;
         this.col    = collision;
         this.grv    = gravity;
+        this.hang   = hangs;
         this.vel    = velocity;
         this.anim   = animated;
     }
@@ -45,6 +57,10 @@ export default class GameObject {
     
     set position(position) {
         this.pos = position;
+    }
+    
+    set lastPosition(position) {
+        this.lpos = position;
     }
     
     set collision(collision) {
@@ -74,6 +90,10 @@ export default class GameObject {
 
     get position() {
         return this.pos;
+    }
+    
+    get lastPosition() {
+        return this.lpos;
     }
 
     get collision() {

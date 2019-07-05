@@ -175,9 +175,10 @@ function draw(interp, ctx = CTX) {
     let imageLeft = Math.round((unitLastPos + (unitPos - unitLastPos) * interp));
     clearCanvas();
     drawBackground();
-    
+
     if(!uther) {
         uther = getGameObject('Unit', 'Hero');
+        uther.position = { x: 0, y: 550 };
     }
 
     uther.draw(ctx);
