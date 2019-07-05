@@ -6,9 +6,10 @@
  // Imports ================================================================ //
  import log from './log.js';
  import { capFirstChar, } from './utils/filename.js';
+ import { createNewGameObject } from './objectsManager.js';
 
  // Config ================================================================= //
-const IMG_MAIN_PATH = '../images/';
+const IMG_MAIN_PATH = '../images/gameobjects/';
 const EVENT_LOADED = new Event('GameAssetsLoaded');
 
 let filesToLoad = 0;
@@ -18,6 +19,8 @@ let gameAssets = {
     toLoad: [],
     loaded: {},
 };
+
+let loadTime = 0;
 
 // Main ==================================================================== //
 /**
@@ -63,11 +66,11 @@ function loadAllAssets(assets) {
 
 /**
  * set a new image and load it
- * @param {String} asset | image name (includeing image type)
+ * @param {String} asset | file's name (includeing image type)
  */
 function loadAsset(asset) {
     let image = new Image();
-    image.onload = onAssetLoad;
+    image.onload = onAssetLoad.bind(asset);
     image.src = getAssetPath(asset);
     getGameAssets().loaded[getAssetName(getImageName(asset))] = image;
 }
@@ -103,9 +106,11 @@ function isDoneLoading(donaLoadingCallback = onDoneLoading) {
 
 /**
  * triggeres when an assets has been loaded
+ * @param {String} asset | file name
  */
 function onAssetLoad() {
     filesLoaded++;
+    createNewGameObject(this);
     assetLoaded(isDoneLoading());
 }
 

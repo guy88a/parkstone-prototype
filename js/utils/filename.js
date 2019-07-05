@@ -54,7 +54,11 @@ function getDataFromName(imageName) {
     let data = {};
     let nameParams = imageName.split('_');
 
-    for(var i = 0; i < nameParams.length; i++) {
+    // set name
+    data.name = nameParams[0];
+
+    // set rest of the properties
+    for(var i = 1; i < nameParams.length; i++) {
         let param = nameParams[i];
         let key = getKeyName(param);
         if(data.hasOwnProperty(key)) {
@@ -64,7 +68,15 @@ function getDataFromName(imageName) {
         }
     }
 
+    if(data.spritesheet && data.spritesheet.length > 0) {
+        data.settings = generateSettings({ spritesheet: data.spritesheet});
+    }
+
     return data;
+}
+
+function getUnitSettings(imageName) {
+
 }
 
 // Misc ==================================================================== //
@@ -84,4 +96,57 @@ function isValidFilename(fileName) {
         return;
     }
     return true;
+}
+
+/**
+ * 
+ * @param {String} settings 
+ */
+function generateSettings({spritesheet, animations}) {
+    spritesheet = getSpritesheetDate(spritesheet);
+    return {
+        spritesheet: spritesheet,
+        animation: {}
+    }
+}
+
+function getSpritesheetDate(spriteSettings) {
+    let spriteParams = spriteSettings.split('f');
+    let source = spriteParams[0];
+    let frame = spriteParams[1];
+    let pos = '0x0';
+    let timestep = '1000x40';
+
+    if(frame.includes('p')) {
+        frame = frame.split('p')[0];
+        pos = frame.split('p')[1];
+    }
+
+    if(pos.includes('t')) {
+        pos = frame.split('t')[0];
+        timestep = frame.split('t')[1];
+    }
+
+    source = splitParamValue(source);
+    source = { w: source[0] * 1, h: source[1] * 1 };
+
+    frame = splitParamValue(frame);
+    frame = { w: source.w / frame[0], h: source.h * 1 };
+
+    pos = splitParamValue(pos);
+    pos = { x: pos[0] * 1, y: pos[1] * 1 };
+
+    timestep = splitParamValue(timestep);
+    timestep = Number(timestep[0] / timestep[1]);
+
+    return {
+        sourceSize: source,
+        frameSize: frame,
+        pos: pos,
+        timestep: timestep
+    }
+}
+
+function splitParamValue(paramValue, splitChar = 'x') {
+    return paramValue.split(splitChar);
 }

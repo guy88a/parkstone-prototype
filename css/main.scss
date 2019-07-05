@@ -31,7 +31,7 @@ $canvas-bg: #afe2ff;
 
     &__logs {
         position: absolute;
-        width: 150px;
+        min-width: 200px;
         height: 28px;
         top: 2px;
         left: 2px;

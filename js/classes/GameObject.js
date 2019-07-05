@@ -22,7 +22,7 @@ export default class GameObject {
         log('Constructing a new Game Object', 'info');
         this.img    = image;
         this.w      = image.width;
-        this.h      = image.width;
+        this.h      = image.height;
         this.pos    = position;
         this.col    = collision;
         this.grv    = gravity;

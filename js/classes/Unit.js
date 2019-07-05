@@ -21,15 +21,7 @@ export default class Unit extends GameObject {
         this.hitting = false;
         this.grv     = true;
 
-        this.settings = {
-            spritesheet: {
-                sourceSize: { w: 0, h:0 },
-                frameSize: { w: 0, h:0 },
-                pos: { x:0, y:0 },
-                step: 1000 / 40
-            },
-            animation: {}
-        }
+        this.settings = args[args.length - 1];
     }
 
     // Setters
@@ -49,11 +41,11 @@ export default class Unit extends GameObject {
         this.hitting = isHitting;
     }
 
-    set spritesheetSettings(settings = this.settings.spritesheet) {
+    set spritesheetSettings(settings) {
         this.settings.spritesheet = settings;
     }
 
-    set animationSettings(settings = {}) {
+    set animationSettings(settings) {
         this.settings.animation = settings;
     }
 
@@ -100,7 +92,7 @@ export default class Unit extends GameObject {
         return this.settings.spritesheet[`${type}Size`];
     }
 
-    spritesheetStep(stepRate = this.settings.spritesheet.step) {
-        return this.settings.spritesheet.step = stepRate;
+    spritesheetStep(stepRate = this.settings.spritesheet.timestep) {
+        return this.settings.spritesheet.timestep = stepRate;
     }
 }

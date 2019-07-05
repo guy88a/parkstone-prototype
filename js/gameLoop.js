@@ -6,6 +6,7 @@
 // Imports ================================================================= //
 import log from './log.js';
 import { getGameAssets, } from './loader.js';
+import { getGameObjects } from './objectsManager.js';
 
 // Config ================================================================== //
 const EL_CANVAS = document.getElementById('game-canvas');
@@ -13,17 +14,19 @@ const CTX = EL_CANVAS.getContext('2d');
 const UI_FPS = document.getElementById('fps-log');
 const UI_CHILL = document.getElementById('chill-log');
 
+var hero = getGameAssets('loaded')['Hero'];
+
 let unitPos = 0;
 let unitPosY = 0;
 let unitLastPos = 0;
 let unitVelocity = 0.2;
-let limit = 800;
+let limit = EL_CANVAS.clientWidth - 169;
 
 let timesChilled = 0;
 let lastFrameTimeMS = 0;
 let delta = 0;
-const maxFPS = 60;
-const timestep = 1000 / 60;
+var maxFPS = 150;
+var timestep = 1000 / 150;
 let fps = maxFPS;
 let framesThisSecond = 0;
 let lastFpsUpdate = 0;
@@ -168,11 +171,17 @@ function stepUpdate() {
 
 // Draw ==================================================================== //
 function draw(interp, ctx = CTX) {
-    let imageLeft = (unitLastPos + (unitPos - unitLastPos) * interp);
-    let img = getGameAssets('loaded')['Uther'];
+    let imageLeft = Math.round((unitLastPos + (unitPos - unitLastPos) * interp));
     clearCanvas();
     drawBackground();
-    ctx.drawImage(img ,0, 0, 169, 205, imageLeft, 550, 169, 205);
+
+    var gom = getGameObjects();
+
+    if(!hero) {
+        hero = getGameAssets('loaded')['Hero'];
+    }
+
+    ctx.drawImage(hero ,0, 0, 169, 205, imageLeft, 550, 169, 205);
     printFPS();
     printChill();
 }

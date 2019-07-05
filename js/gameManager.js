@@ -2,18 +2,20 @@
  * GAME MANAGER
  */
 
-// Imports ================================================================ //
+// Imports ================================================================= //
 import log from './log.js';
 import invokeLoader, { getGameAssets, } from './loader.js';
 import initGameLoop from './gameLoop.js';
 
-// Config ================================================================= //
+// Config ================================================================== //
+const UI_LOAD = document.getElementById('load-log');
+
 let gameAssets = {
     toLoad: [],
     loaded: {},
 };
 
-// Main =================================================================== //
+// Main ==================================================================== //
 /**
  * preloading assets and invoking a start game function
  * @param {Function} onloadCallback | operation to perform after loading assets
@@ -30,7 +32,7 @@ export function defineAssets(assets) {
     getGameAssets().toLoad = assets;
 }
 
-// Preload ================================================================ //
+// Preload ================================================================= //
 /**
  * preloading the game assets that were defined
  * attaches a listener to the 'GameAssetsLoaded' event
@@ -47,7 +49,7 @@ function preloadGame(onloadCallback, startGameCallback = startGame) {
     invokeLoader(getGameAssets('load')); //TODO replace get assets
 }
 
-// Start ================================================================== //
+// Start =================================================================== //
 /**
  * a default start game function
  * initiates the game loop
@@ -59,5 +61,11 @@ function startGame(onloadCallback) {
     } else {
         log('onloadCallback is not a function', 'error');
     }
+    printLoadTime(new Date().getTime() - window.startTS);
     initGameLoop();
+}
+
+// Misc ==================================================================== //
+function printLoadTime(loadTime) {
+    UI_LOAD.innerHTML = `Load : ${loadTime}ms`;
 }

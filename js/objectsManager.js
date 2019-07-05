@@ -9,6 +9,7 @@ import log from './log.js';
 import { getLoadedAsset } from './loader.js';
 import GameObject from './classes/GameObject.js';
 import Unit from './classes/Unit.js';
+import getImageData, { capFirstChar } from './utils/filename.js';
 
 // Config ================================================================== //
 let GameObjects = {
@@ -21,6 +22,11 @@ let GameObjectsUpdater = {
     Object: updateObjectProp,
     Asset: updateAssetProp,
 }
+let typeByKey = {
+    "A": "Asset",
+    "O": "Object",
+    "U": "Unit",
+}
 let GameObjectsTypes = {}
 
 // Main ==================================================================== //
@@ -31,6 +37,14 @@ let GameObjectsTypes = {}
 export default function initObjectsManager(gameObjetsArray) {
     log('Initiating all game objects', 'info');
     initGameObjects(gameObjetsArray);
+}
+
+/**
+ * create new game object
+ * @param {Array} objectArray | contains the object's data - ['Type', 'Name', { ..properties }]
+ */
+export function createNewGameObject(fileName) {
+    GameObjectMapper(generateGameObjectArray(fileName));
 }
 
 /**
@@ -64,8 +78,8 @@ export function getGameObject(type, name) {
 
 
 // Generators ============================================================== //
-function createNewUnit({image, position, collision, velocity, animated}) {
-    return new Unit(image, position, collision, velocity, animated);
+function createNewUnit({image, position, collision, velocity, animated, settings}) {
+    return new Unit(image, position, collision, velocity, animated, settings);
 }
 
 
@@ -110,10 +124,10 @@ function initGameObjects(objectsArray = []) {
 // Mappers ================================================================= //
 /**
  * create and map a new game object
- * @param {Array} objectArray | contains the object's data
+ * @param {Array} objectArray | contains the object's data - ['Type', 'Name', { ..properties }]
  */
 function GameObjectMapper(objectArray) {
-    let type = objectArray[0];
+    let type = typeByKey[objectArray[0]];
     let name = objectArray[1];
     let params = objectArray[2];
     let ObjectImage = getLoadedAsset(name);
@@ -148,4 +162,21 @@ function updateAssetProp(name, prop, value) {
 
 function getUnitTypeByName(name) {
     return GameObjectsTypes[name];
+}
+
+/**
+ * converts a game objet's data into an array
+ * - { type, name, ...props } -> [Type, Name, {...props}]
+ * @param {Object} GOData | Game object data
+ */
+function dataToGameObjectArray(GOData) {
+    return [
+        capFirstChar(GOData.type),
+        capFirstChar(GOData.name),
+        { ...GOData }
+    ]
+}
+
+function generateGameObjectArray(fileName) {
+    return dataToGameObjectArray(getImageData(fileName));
 }

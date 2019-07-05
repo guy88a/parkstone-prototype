@@ -27,7 +27,7 @@
 
 .main-scene__logs {
   position: absolute;
-  width: 150px;
+  min-width: 200px;
   height: 28px;
   top: 2px;
   left: 2px;
