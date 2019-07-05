@@ -74,8 +74,8 @@ export default class Unit extends GameObject {
     draw(context) {
         context.drawImage(
             this.img,
-            this.settings.spritesheet.pos.x,
-            this.settings.spritesheet.pos.y,
+            this.settings.spritesheet.pos * this.settings.spritesheet.frameSize.w,
+            0,
             this.settings.spritesheet.frameSize.w,
             this.settings.spritesheet.frameSize.h,
             this.pos.x,

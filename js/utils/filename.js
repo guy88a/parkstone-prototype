@@ -114,7 +114,8 @@ function getSpritesheetDate(spriteSettings) {
     let spriteParams = spriteSettings.split('f');
     let source = spriteParams[0];
     let frame = spriteParams[1];
-    let pos = '0x0';
+    let pos = '0';
+    let steps = 0;
     let timestep = '1000x40';
 
     if(frame.includes('p')) {
@@ -131,10 +132,10 @@ function getSpritesheetDate(spriteSettings) {
     source = { w: source[0] * 1, h: source[1] * 1 };
 
     frame = splitParamValue(frame);
+    steps = frame[0];
     frame = { w: source.w / frame[0], h: source.h * 1 };
 
-    pos = splitParamValue(pos);
-    pos = { x: pos[0] * 1, y: pos[1] * 1 };
+    pos = pos * 1;
 
     timestep = splitParamValue(timestep);
     timestep = Number(timestep[0] / timestep[1]);
@@ -148,5 +149,6 @@ function getSpritesheetDate(spriteSettings) {
 }
 
 function splitParamValue(paramValue, splitChar = 'x') {
-    return paramValue.split(splitChar);
+    return paramValue.includes(splitChar) ?
+            paramValue.split(splitChar) : [paramValue];
 }

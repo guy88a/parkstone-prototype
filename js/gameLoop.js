@@ -20,14 +20,14 @@ var uther;
 let unitPos = 0;
 let unitPosY = 0;
 let unitLastPos = 0;
-let unitVelocity = 0.2;
+let unitVelocity = 0.3;
 let limit = EL_CANVAS.clientWidth - 169;
 
 let timesChilled = 0;
 let lastFrameTimeMS = 0;
 let delta = 0;
-var maxFPS = 150;
-var timestep = 1000 / 150;
+var maxFPS = 60;
+var timestep = 1000 / 60;
 let fps = maxFPS;
 let framesThisSecond = 0;
 let lastFpsUpdate = 0;
@@ -154,9 +154,17 @@ function calcFPS(ts) {
  * @param {Function} callback | a callback function
  */
 function update(delta, callback) {
-    unitLastPos = unitPos;
+    if(!uther) {
+        uther = getGameObject('Unit', 'Hero');
+        uther.position = { x: 0, y: 550 };
+    }
+    unitLastPos = uther.positionX;
+    uther.positionX += Math.round(unitVelocity * delta);
+    if(uther.positionX >= limit || uther.positionX <= 0) unitVelocity = -unitVelocity;
+
+    /*unitLastPos = unitPos;
     unitPos += unitVelocity * delta;
-    if(unitPos >= limit || unitPos <= 0) unitVelocity = -unitVelocity;
+    if(unitPos >= limit || unitPos <= 0) unitVelocity = -unitVelocity;*/
 
     if(typeof callback === 'function') {
         callback();

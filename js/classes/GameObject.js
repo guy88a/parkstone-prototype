@@ -59,6 +59,14 @@ export default class GameObject {
         this.pos = position;
     }
     
+    set positionX(position) {
+        this.pos.x = position;
+    }
+    
+    set positionY(position) {
+        this.pos.y = position;
+    }
+    
     set lastPosition(position) {
         this.lpos = position;
     }
@@ -90,6 +98,14 @@ export default class GameObject {
 
     get position() {
         return this.pos;
+    }
+
+    get positionX() {
+        return this.pos.x;
+    }
+
+    get positionY() {
+        return this.pos.y;
     }
     
     get lastPosition() {
