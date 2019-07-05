@@ -73,7 +73,7 @@ export function getGameObjects() {
  * @param {String} name | object's name
  */
 export function getGameObject(type, name) {
-    return GameObjects[type].get(name);
+    return GameObjects[`${type}s`].get(name);
 }
 
 

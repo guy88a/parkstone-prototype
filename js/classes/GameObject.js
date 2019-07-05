@@ -9,7 +9,7 @@ import log from '../log.js';
 // Config ================================================================== //
 const DEFAULTS = {
     image: new Image(),
-    position: { x: 0, y: 0 },
+    position: { x: 0, y: 0, last: { x: 0, y: 0 } },
     collision: false,
     gravity: false,
     velocity: { x: 0, y: 0 },
@@ -90,6 +90,10 @@ export default class GameObject {
 
     // Methods
     draw(context) {
-        context.drawImage(this.src, this.pos.x, this.pos.y, this.w, this.h);
+        context.drawImage(this.img, this.pos.x, this.pos.y, this.w, this.h);
+    }
+
+    lastPosition(position = this.pos.last) {
+        return this.pos.last = position;
     }
 }
