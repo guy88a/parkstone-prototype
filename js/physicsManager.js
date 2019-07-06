@@ -29,6 +29,7 @@ function setPhysicsProtos() {
 
         if((this.positionY + this.velocityY + gravFx) > groundHit) {
             this.velocityY = 0;
+            this.hang = false;
             gravFx = 0;
             this.pos = {
                 x: this.pos.x,
