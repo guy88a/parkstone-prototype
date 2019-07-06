@@ -75,9 +75,26 @@ function getHandlerFromMap(eventType, keyCode) {
     return Mapper.get(`${eventType}_${keyCode}`);
 }
 
+/**
+ * map key events callbacks
+ * @param {*} typeArray | key event type ('down_40', 'up_38', 'press_10'...)
+ * @param {*} callbacksArray | 2d array (binding can be a game object):
+ * - [[callback, *binding]]
+ * - * "Unit, Hero"
+ * 
+ */
 function mapEventsHandlers(typeArray, callbacksArray) {
     for(var i = 0; i < typeArray.length; i++) {
-        addHandlerToMap(typeArray[i], callbacksArray[i]);
+        let binding = callbacksArray[i][1];
+        if(binding) {
+            // bounded mapping
+            binding = getBinding(binding);
+            addHandlerToMap(typeArray[i], callbacksArray[i][0].bind(binding));
+            return;
+        }
+
+        // unbounded mapping
+        addHandlerToMap(typeArray[i], callbacksArray[i][0]);
     }
     log('Event handlers are mapped!', 'success');
 }
