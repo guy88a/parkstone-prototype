@@ -20,6 +20,7 @@ export default class Unit extends GameObject {
         this.jumping = false;
         this.hitting = false;
         this.grv     = true;
+        this.dir     = 1;
 
         this.settings = args[args.length - 1];
     }
@@ -39,6 +40,10 @@ export default class Unit extends GameObject {
     
     set isHitting(isHitting) {
         this.hitting = isHitting;
+    }
+
+    set direction(direction) {
+        this.dir = direction;
     }
 
     set spritesheetSettings(settings) {
@@ -64,6 +69,10 @@ export default class Unit extends GameObject {
     
     get isHitting() {
         return this.hitting;
+    }
+
+    get direction() {
+        return this.dir;
     }
 
     get animationSettings() {

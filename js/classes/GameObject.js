@@ -43,7 +43,7 @@ export default class GameObject {
     }
 
     // Setters
-    set image(source) {
+    set image(image) {
         this.img = image;
     }
 
@@ -77,6 +77,14 @@ export default class GameObject {
     
     set velocity(velocity) {
         this.vel = velocity;
+    }
+    
+    set velocityX(velocity) {
+        this.vel.x = velocity;
+    }
+    
+    set velocityY(velocity) {
+        this.vel.y = velocity;
     }
 
     set isAnimating(isAnimating) {
@@ -120,6 +128,14 @@ export default class GameObject {
         return this.vel;
     }
 
+    get velocityX() {
+        return this.vel.x;
+    }
+
+    get velocityY() {
+        return this.vel.y;
+    }
+
     get isAnimating() {
         return this.animating;
     }
@@ -127,6 +143,11 @@ export default class GameObject {
     // Methods
     draw(context) {
         context.drawImage(this.img, this.pos.x, this.pos.y, this.w, this.h);
+    }
+
+    updatePosition() {
+        this.pos.x += this.vel.x;
+        this.pos.y += this.vel.y;
     }
 
     lastPosition(position = this.pos.last) {

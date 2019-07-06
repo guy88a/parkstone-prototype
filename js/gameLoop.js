@@ -26,8 +26,8 @@ let limit = EL_CANVAS.clientWidth - 169;
 let timesChilled = 0;
 let lastFrameTimeMS = 0;
 let delta = 0;
-var maxFPS = 60;
-var timestep = 1000 / 60;
+var maxFPS = 90;
+var timestep = 1000 / 90;
 let fps = maxFPS;
 let framesThisSecond = 0;
 let lastFpsUpdate = 0;
@@ -156,9 +156,12 @@ function calcFPS(ts) {
 function update(delta, callback) {
     if(!uther) {
         uther = getGameObject('Unit', 'Hero');
-        uther.position = { x: 0, y: 550 };
+        uther.position = { x: 0, y: 245 };
+        uther.width = uther.width * -1;
     }
     unitLastPos = uther.positionX;
+    uther.gravitate();
+    uther.updatePosition();
     uther.positionX += Math.round(unitVelocity * delta);
     if(uther.positionX >= limit || uther.positionX <= 0) unitVelocity = -unitVelocity;
 
@@ -186,11 +189,11 @@ function draw(interp, ctx = CTX) {
 
     if(!uther) {
         uther = getGameObject('Unit', 'Hero');
-        uther.position = { x: 0, y: 550 };
+        uther.position = { x: 0, y: 245 };
+        uther.direction = -1;
     }
 
     uther.draw(ctx);
-
     /*if(!hero) {
         hero = getGameAssets('loaded')['Hero'];
     }*/

@@ -6,6 +6,7 @@
 import log from './log.js';
 import invokeLoader, { getGameAssets, } from './loader.js';
 import initGameLoop from './gameLoop.js';
+import initGamePhysics from './physicsManager.js';
 
 // Config ================================================================== //
 const UI_LOAD = document.getElementById('load-log');
@@ -62,6 +63,7 @@ function startGame(onloadCallback) {
         log('onloadCallback is not a function', 'error');
     }
     printLoadTime(new Date().getTime() - window.startTS);
+    initGamePhysics();
     initGameLoop();
 }
 

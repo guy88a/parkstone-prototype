@@ -144,6 +144,7 @@ function getSpritesheetDate(spriteSettings) {
         sourceSize: source,
         frameSize: frame,
         pos: pos,
+        direction: 1,
         timestep: timestep
     }
 }
