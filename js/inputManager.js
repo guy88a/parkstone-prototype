@@ -5,6 +5,7 @@
 
 // Imports ================================================================= //
 import log from './log.js';
+import { getGameObject } from './objectsManager.js';
 
 // Config ================================================================== //
 let Mapper = new Map();
@@ -100,3 +101,7 @@ function mapEventsHandlers(typeArray, callbacksArray) {
 }
 
 // Misc ==================================================================== //
+function getBinding(params) {
+    params = params.includes(',') ? params.split(',') : false;
+    return params ? getGameObject(params[0], params[1]) : false;
+}
