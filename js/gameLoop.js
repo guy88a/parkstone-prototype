@@ -20,14 +20,14 @@ var uther;
 let unitPos = 0;
 let unitPosY = 0;
 let unitLastPos = 0;
-let unitVelocity = 0.3;
+let unitVelocity = 0.6;
 let limit = EL_CANVAS.clientWidth - 169;
 
 let timesChilled = 0;
 let lastFrameTimeMS = 0;
 let delta = 0;
-var maxFPS = 90;
-var timestep = 1000 / 90;
+var maxFPS = 100;
+var timestep = 1000 / 100;
 let fps = maxFPS;
 let framesThisSecond = 0;
 let lastFpsUpdate = 0;
@@ -36,6 +36,9 @@ let lastFpsUpdate = 0;
 let frameID = 0;
 let started = false;
 let running = false;
+
+let oldDirTS = 0;
+let newDirTS = 0;
 
 // Main ==================================================================== //
 /**
@@ -61,11 +64,11 @@ function mainLoop(timestamp) {
     setDelta(calcDelta(timestamp));
     setLastFrameTs(timestamp);
     calcFPS(timestamp);
-
+    
     // update game state
     let numUpdateSteps = 0;
     while(delta >= timestep) {
-        update(timestep);
+        update(timestep, null, timestamp);
         stepUpdate();
         // Overload check
         if(++numUpdateSteps >= 240) {
@@ -153,17 +156,28 @@ function calcFPS(ts) {
  * @param {Number} delta | delta time
  * @param {Function} callback | a callback function
  */
-function update(delta, callback) {
+function update(delta, callback, timestamp) {
     if(!uther) {
         uther = getGameObject('Unit', 'Hero');
         uther.position = { x: 0, y: 245 };
+        uther.velocity.x = unitVelocity;
         uther.width = uther.width * -1;
     }
     unitLastPos = uther.positionX;
-    uther.gravitate();
-    uther.updatePosition();
-    uther.positionX += Math.round(unitVelocity * delta);
-    if(uther.positionX >= limit || uther.positionX <= 0) unitVelocity = -unitVelocity;
+    uther.gravitate(delta);
+    //uther.positionX += Math.round(unitVelocity * delta);
+    uther.updatePosition(delta);
+    unitPos = uther.positionX;
+    if(uther.positionX >= limit || uther.positionX <= 0) {
+        newDirTS = timestamp;
+        log(newDirTS - oldDirTS);
+        oldDirTS = newDirTS;
+        let fixedPos = [0, limit].reduce(function(prev, curr) {
+            return (Math.abs(curr - uther.positionX) < Math.abs(prev - uther.positionX) ? curr : prev);
+        });
+        uther.positionX = fixedPos;
+        uther.velocity.x = -uther.velocity.x;
+    };
 
     /*unitLastPos = unitPos;
     unitPos += unitVelocity * delta;
@@ -183,21 +197,23 @@ function stepUpdate() {
 
 // Draw ==================================================================== //
 function draw(interp, ctx = CTX) {
-    let imageLeft = Math.round((unitLastPos + (unitPos - unitLastPos) * interp));
-    clearCanvas();
-    drawBackground();
-
+    //let imageLeft = Math.round((unitLastPos + (unitPos - unitLastPos) * interp));
     if(!uther) {
         uther = getGameObject('Unit', 'Hero');
         uther.position = { x: 0, y: 245 };
-        uther.direction = -1;
+        uther.velocity.x = unitVelocity;
+        uther.width = uther.width * -1;
     }
-
+    //uther.positionX = Math.round((unitLastPos + (uther.positionX - unitLastPos) * interp));
+    clearCanvas();
+    drawBackground();
+    uther.positionX = Math.round(uther.positionX);
     uther.draw(ctx);
+
     /*if(!hero) {
         hero = getGameAssets('loaded')['Hero'];
     }*/
-    //ctx.drawImage(hero ,0, 0, 169, 205, imageLeft, 550, 169, 205);
+    //ctx.drawImage(uther.image ,0, 0, 169, 205, imageLeft, 550, 169, 205);
 
     printFPS();
     printChill();

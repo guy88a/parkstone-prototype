@@ -145,9 +145,9 @@ export default class GameObject {
         context.drawImage(this.img, this.pos.x, this.pos.y, this.w, this.h);
     }
 
-    updatePosition() {
-        this.pos.x += this.vel.x;
-        this.pos.y += this.vel.y;
+    updatePosition(delta) {
+        this.pos.x += this.vel.x * delta;
+        this.pos.y += this.vel.y * delta;
     }
 
     lastPosition(position = this.pos.last) {

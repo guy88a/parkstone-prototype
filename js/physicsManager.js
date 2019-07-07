@@ -23,28 +23,28 @@ let Physics = new Map([
  * add physics prototypes to game objects
  */
 function setPhysicsProtos() {
-    GameObject.prototype.gravitate = function(groundHit = Physics.get('ground') - this.height) {
+    GameObject.prototype.gravitate = function(delta, ground = Physics.get('ground') - this.height) {
         let gravFx = getGravityEffect();
-        //let groundHit = Physics.get('ground') - this.height;
 
-        if((this.positionY + this.velocityY + gravFx) > groundHit) {
+        if((this.positionY + this.velocityY + gravFx) > ground - 50) {
+            this.positionY;
+        }
+
+        if((this.positionY + ((this.velocityY + gravFx) * delta)) > ground) {
             this.velocityY = 0;
             this.hang = false;
             gravFx = 0;
             this.pos = {
                 x: this.pos.x,
-                y: groundHit
+                y: ground
             };
         }
-
         this.velocityY += gravFx;
     }
     
-    Unit.prototype.jump = function(forced = false, cap) {
-        let jumpPower = getPoweredValue(Physics.get('jumpPower') * -1);
-        //if(cap && this.velocityY)
+    Unit.prototype.jump = function(forced = false) {
         if(forced || (!this.hang)) {
-            this.velocityY = jumpPower;
+            this.velocityY = getPoweredValue(Physics.get('jumpPower') * -1);
         }
     }
 }
