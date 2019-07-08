@@ -15,7 +15,7 @@ let Physics = new Map([
     ['ground', 750],
     ['jumpPower', 2],
     ['power', 1],
-    ['velocity', 0.3]
+    ['velocity', 0.01]
 ]);
 
 // Extanding =============================================================== //
@@ -39,7 +39,8 @@ function setPhysicsProtos() {
                 y: ground
             };
         }
-        this.velocityY += gravFx;
+
+        this.velocityY += gravFx * delta;
     }
     
     Unit.prototype.jump = function(forced = false) {

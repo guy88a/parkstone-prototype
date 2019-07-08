@@ -20,12 +20,14 @@ var uther;
 let unitPos = 0;
 let unitPosY = 0;
 let unitLastPos = 0;
-let unitVelocity = 0.6;
+let unitVelocity = 0.3;
 let limit = EL_CANVAS.clientWidth - 169;
 
 let timesChilled = 0;
 let lastFrameTimeMS = 0;
 let delta = 0;
+// var maxFPS = 30;
+// var timestep = 1000 / 90;
 var maxFPS = 100;
 var timestep = 1000 / 150;
 let fps = maxFPS;
