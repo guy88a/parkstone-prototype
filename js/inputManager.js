@@ -81,7 +81,7 @@ function getHandlerFromMap(eventType, keyCode) {
  * @param {*} typeArray | key event type ('down_40', 'up_38', 'press_10'...)
  * @param {*} callbacksArray | 2d array (binding can be a game object):
  * - [[callback, *binding]]
- * - * "Unit, Hero"
+ * - * "Unit,Hero"
  * 
  */
 function mapEventsHandlers(typeArray, callbacksArray) {
@@ -89,7 +89,7 @@ function mapEventsHandlers(typeArray, callbacksArray) {
         let binding = callbacksArray[i][1];
         if(binding) {
             // bounded mapping
-            binding = getBinding(binding);
+            binding = getBindingObject(binding);
             addHandlerToMap(typeArray[i], callbacksArray[i][0].bind(binding));
             return;
         }
@@ -101,7 +101,7 @@ function mapEventsHandlers(typeArray, callbacksArray) {
 }
 
 // Misc ==================================================================== //
-function getBinding(params) {
+function getBindingObject(params) {
     params = params.includes(',') ? params.split(',') : false;
     return params ? getGameObject(params[0], params[1]) : false;
 }
