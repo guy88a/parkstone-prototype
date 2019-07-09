@@ -64,7 +64,7 @@ function invokeHandler(event) {
  */
 function getEventHandler(eventType, keyCode) {
     let handler = getHandlerFromMap(eventType, keyCode);
-    return typeof handler === 'function' ? handler : function(){ return; };
+    return typeof handler === 'function' ? handler : function(){ return false; };
 }
 
 // Mapping ================================================================= //
