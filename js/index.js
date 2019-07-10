@@ -25,7 +25,10 @@ window.startTS = new Date().getTime();
 function onLoadInvoker() {
     function a() { log('function a') }
     function b() { log('function b') }
-    inputMapHandlers(['down_40', 'up_38'], [[a,false], [b,false]]);
+    function jump() {
+        this.jump();
+    }
+    inputMapHandlers(['down_40', 'up_38', 'press_32'], [[a,false], [b,false], [jump, 'Unit,Hero']]);
     initInputManager();
 }
 

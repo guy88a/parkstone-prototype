@@ -45,6 +45,7 @@ function setPhysicsProtos() {
     
     Unit.prototype.jump = function(forced = false) {
         if(forced || (!this.hang)) {
+            this.hang = true;
             this.velocityY = getPoweredValue(Physics.get('jumpPower') * -1);
         }
     }

@@ -33,7 +33,7 @@ export function inputMapHandlers(typeArray, callbacksArray) {
  * iterate through all event types passed (down, up, pressed...)
  * @param {Array} eventsTypesArray | all events types to listen to
  */
-function addAllKeysLieteners(eventsTypesArray = ['down', 'up', 'pressed']) {
+function addAllKeysLieteners(eventsTypesArray = ['down', 'up', 'press']) {
     for(var i = 0; i < eventsTypesArray.length; i++) {
         addKeysListener(eventsTypesArray[i]);
     }
