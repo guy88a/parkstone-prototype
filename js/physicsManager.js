@@ -28,6 +28,14 @@ function setPhysicsProtos() {
 
         if((this.positionY + ((this.velocityY + gravFx) * delta)) > ground) {
             this.velocityY = 0;
+
+            if(this.hang) {
+                if(this.settings && this.settings.spritesheet) {
+                    this.settings.spritesheet.pos = 2;
+                    this.settings.spritesheet.next = this.settings.spritesheet.timestep;
+                }
+            }
+
             this.hang = false;
             gravFx = 0;
             this.pos = {

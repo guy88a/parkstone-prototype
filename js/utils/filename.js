@@ -116,7 +116,7 @@ function getSpritesheetDate(spriteSettings) {
     let frame = spriteParams[1];
     let pos = '0';
     let steps = 0;
-    let timestep = '1000x4';
+    let timestep = '1000x5';
 
     if(frame.includes('p')) {
         frame = frame.split('p')[0];
