@@ -56,6 +56,8 @@ export default function initGameLoop() {
  * @param {Number} timestamp | passed by default from 'requestAnimationFrame'
  */
 function mainLoop(timestamp) {
+    var gom = getGameObjects();
+
     // check if entered the frame too soon
     if(shouldSkipFrame(timestamp)) {
         requestAnimationFrame(mainLoop);
@@ -66,6 +68,8 @@ function mainLoop(timestamp) {
     setDelta(calcDelta(timestamp));
     setLastFrameTs(timestamp);
     calcFPS(timestamp);
+    
+    let originalDelta = delta;
     
     // update game state
     let numUpdateSteps = 0;
@@ -80,7 +84,7 @@ function mainLoop(timestamp) {
     }
 
     // draw and request the next frame
-    draw(delta / timestep);
+    draw(delta / timestep, originalDelta);
     requestAnimationFrame(mainLoop);
 }
 
@@ -161,6 +165,7 @@ function calcFPS(ts) {
 function update(delta, callback, timestamp) {
     if(!uther) {
         uther = getGameObject('Unit', 'Hero');
+        uther.animate = true;
         uther.position = { x: 0, y: 245 };
         uther.velocity.x = unitVelocity;
         uther.width = uther.width * -1;
@@ -198,10 +203,11 @@ function stepUpdate() {
 }
 
 // Draw ==================================================================== //
-function draw(interp, ctx = CTX) {
+function draw(interp, delta, ctx = CTX) {
     //let imageLeft = Math.round((unitLastPos + (unitPos - unitLastPos) * interp));
     if(!uther) {
         uther = getGameObject('Unit', 'Hero');
+        uther.animate = true;
         uther.position = { x: 0, y: 245 };
         uther.velocity.x = unitVelocity;
         uther.width = uther.width * -1;
@@ -210,7 +216,7 @@ function draw(interp, ctx = CTX) {
     clearCanvas();
     drawBackground();
     uther.positionX = Math.round(uther.positionX);
-    uther.draw(ctx);
+    uther.draw(ctx, delta);
 
     /*if(!hero) {
         hero = getGameAssets('loaded')['Hero'];
@@ -251,7 +257,7 @@ function startMainLoop(mainLoopCallback) {
         // Dummy frame to get our timestamps and initial drawing right.
         // Track the frame ID so we can cancel it if we stop quickly.
         frameID = requestAnimationFrame(function(timestamp) {
-            draw(1);
+            draw(1, 0);
             running = true;
             
             // reset some time tracking variables

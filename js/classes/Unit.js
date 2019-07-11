@@ -80,7 +80,15 @@ export default class Unit extends GameObject {
     }
 
     // Methods
-    draw(context) {
+    draw(context, delta) {
+        if(this.anim) {
+            if(this.hang) {
+                this.settings.spritesheet.pos = 1;
+            } else {
+                this.settings.spritesheet.pos = this.getSpritesheetPosition(delta, this.spritesheetStep(), this.spritesheetNextStep());
+            }
+        }
+
         context.drawImage(
             this.img,
             this.settings.spritesheet.pos * this.settings.spritesheet.frameSize.w,
@@ -106,5 +114,9 @@ export default class Unit extends GameObject {
 
     spritesheetStep(stepRate = this.settings.spritesheet.timestep) {
         return this.settings.spritesheet.timestep = stepRate;
+    }
+
+    spritesheetNextStep(next = this.settings.spritesheet.next) {
+        return this.settings.spritesheet.next = next;
     }
 }

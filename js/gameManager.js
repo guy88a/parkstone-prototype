@@ -7,6 +7,7 @@ import log from './log.js';
 import invokeLoader, { getGameAssets, } from './loader.js';
 import initGameLoop from './gameLoop.js';
 import initGamePhysics from './physicsManager.js';
+import activateAnimations from './animationManager.js';
 
 // Config ================================================================== //
 const UI_LOAD = document.getElementById('load-log');
@@ -64,6 +65,7 @@ function startGame(onloadCallback) {
     }
     printLoadTime(new Date().getTime() - window.startTS);
     initGamePhysics();
+    activateAnimations();
     initGameLoop();
 }
 

@@ -26,10 +26,6 @@ function setPhysicsProtos() {
     GameObject.prototype.gravitate = function(delta, ground = Physics.get('ground') - this.height) {
         let gravFx = getGravityEffect();
 
-        if((this.positionY + this.velocityY + gravFx) > ground - 50) {
-            this.positionY;
-        }
-
         if((this.positionY + ((this.velocityY + gravFx) * delta)) > ground) {
             this.velocityY = 0;
             this.hang = false;

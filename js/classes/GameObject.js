@@ -87,8 +87,8 @@ export default class GameObject {
         this.vel.y = velocity;
     }
 
-    set isAnimating(isAnimating) {
-        this.animating = isAnimating;
+    set animate(isAnimating) {
+        this.anim = isAnimating;
     }
 
     // Getters
@@ -136,8 +136,8 @@ export default class GameObject {
         return this.vel.y;
     }
 
-    get isAnimating() {
-        return this.animating;
+    get animate() {
+        return this.anim;
     }
 
     // Methods
