@@ -21,7 +21,7 @@ let obstacle;
 let unitPos = 0;
 let unitPosY = 0;
 let unitLastPos = 0;
-let unitVelocity = 0.3;
+let unitVelocity = 0.5;
 let limit = EL_CANVAS.clientWidth - 169;
 
 let timesChilled = 0;
@@ -218,6 +218,7 @@ function draw(interp, delta, ctx = CTX) {
         uther.width = uther.width * -1;
 
         obstacle = getGameObject('Object', 'Obstacle');
+        obstacle.position = { x: 500, y: 245 };
     }
     //uther.positionX = Math.round((unitLastPos + (uther.positionX - unitLastPos) * interp));
     clearCanvas();
