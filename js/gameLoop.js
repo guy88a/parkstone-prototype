@@ -16,6 +16,7 @@ const UI_CHILL = document.getElementById('chill-log');
 
 var hero = getGameAssets('loaded')['Hero'];
 var uther;
+let obstacle;
 
 let unitPos = 0;
 let unitPosY = 0;
@@ -56,8 +57,6 @@ export default function initGameLoop() {
  * @param {Number} timestamp | passed by default from 'requestAnimationFrame'
  */
 function mainLoop(timestamp) {
-    var gom = getGameObjects();
-
     // check if entered the frame too soon
     if(shouldSkipFrame(timestamp)) {
         requestAnimationFrame(mainLoop);
@@ -167,13 +166,18 @@ function update(delta, callback, timestamp) {
         uther = getGameObject('Unit', 'Hero');
         uther.animate = true;
         uther.position = { x: 0, y: 245 };
-        uther.velocity.x = unitVelocity;
+        uther.velocityX = unitVelocity;
         uther.width = uther.width * -1;
+
+        obstacle = getGameObject('Object', 'Obstacle');
+        //obstacle.velocityX = unitVelocity;
     }
     unitLastPos = uther.positionX;
     uther.gravitate(delta);
+    obstacle.gravitate(delta);
     //uther.positionX += Math.round(unitVelocity * delta);
     uther.updatePosition(delta);
+    obstacle.updatePosition(delta);
     unitPos = uther.positionX;
     if(uther.positionX >= limit || uther.positionX <= 0) {
         newDirTS = timestamp;
@@ -183,7 +187,7 @@ function update(delta, callback, timestamp) {
             return (Math.abs(curr - uther.positionX) < Math.abs(prev - uther.positionX) ? curr : prev);
         });
         uther.positionX = fixedPos;
-        uther.velocity.x = -uther.velocity.x;
+        uther.velocityX = -uther.velocityX;
     };
 
     /*unitLastPos = unitPos;
@@ -206,17 +210,22 @@ function stepUpdate() {
 function draw(interp, delta, ctx = CTX) {
     //let imageLeft = Math.round((unitLastPos + (unitPos - unitLastPos) * interp));
     if(!uther) {
+        var gom = getGameObjects();
         uther = getGameObject('Unit', 'Hero');
         uther.animate = true;
         uther.position = { x: 0, y: 245 };
-        uther.velocity.x = unitVelocity;
+        uther.velocity = { x: unitVelocity, y: 0 };
         uther.width = uther.width * -1;
+
+        obstacle = getGameObject('Object', 'Obstacle');
     }
     //uther.positionX = Math.round((unitLastPos + (uther.positionX - unitLastPos) * interp));
     clearCanvas();
     drawBackground();
     uther.positionX = Math.round(uther.positionX);
+    obstacle.positionX = Math.round(obstacle.positionX);
     uther.draw(ctx, delta);
+    obstacle.draw(ctx, delta);
 
     /*if(!hero) {
         hero = getGameAssets('loaded')['Hero'];
