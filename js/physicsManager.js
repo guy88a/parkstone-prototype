@@ -9,13 +9,25 @@ import GameObject from './classes/GameObject.js';
 import Unit from './classes/Unit.js';
 
 // Config ================================================================== //
+let Changes = {
+    changed: [],
+    force: false,
+    gravity: false,
+    ground: false,
+    jumpPower: false,
+    power: false,
+    velocity: false,
+    motion: false
+}
+
 let Physics = new Map([
     ['force', 1],
     ['gravity', true],
     ['ground', 750],
-    ['jumpPower', 2],
-    ['power', 1],
-    ['velocity', 0.006]
+    ['jumpPower', 2.2],
+    ['power', 0.5],
+    ['velocity', 0.006],
+    ['motion', 0.5]
 ]);
 
 // Extanding =============================================================== //
@@ -46,6 +58,17 @@ function setPhysicsProtos() {
 
         this.velocityY += gravFx * delta;
     }
+
+    GameObject.prototype.motion = function(setVelocity = true) {
+        this.motion = true;
+        if(setVelocity) {
+            this.motionUpdate();
+        }
+    }
+
+    GameObject.prototype.motionUpdate = function() {
+        this.velocityX = Physics.get('motion');
+    }
     
     Unit.prototype.jump = function(forced = false) {
         if(forced || (!this.hang)) {
@@ -57,7 +80,7 @@ function setPhysicsProtos() {
 
 // Main ==================================================================== //
 /**
- * initiate all game physics
+ * initiate all game physics    
  */
 export default function initGamePhysics() {
     log('initGamePhysics function', 'info');
@@ -75,8 +98,14 @@ export function detectCollision(obj1, obj2) {
 // Setters & Getters ======================================================= //
 
 
-// Checkers ================================================================ //
+// Physics Controllers ===================================================== //
+function motionIncrease(amount = Physics.get('motion') * 0.1) {
+    Physics.set('motion', Physics.get('motion') + amount)
+}
 
+function motionDecrease(amount = Physics.get('motion') * 0.1) {
+    Physics.set('motion', Physics.get('motion') - amount)
+}
 
 // Misc ==================================================================== //
 function calcGravityEffect(power = Physics.get('power')) {
