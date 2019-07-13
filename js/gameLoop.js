@@ -190,6 +190,10 @@ function update(delta, callback, timestamp) {
         uther.velocityX = -uther.velocityX;
     };
 
+    if(obstacle.positionX < (0 - obstacle.width)) {
+        obstacle.positionX = EL_CANVAS.clientWidth;
+    }
+
     /*unitLastPos = unitPos;
     unitPos += unitVelocity * delta;
     if(unitPos >= limit || unitPos <= 0) unitVelocity = -unitVelocity;*/
@@ -219,6 +223,7 @@ function draw(interp, delta, ctx = CTX) {
 
         obstacle = getGameObject('Object', 'Obstacle');
         obstacle.position = { x: 500, y: 245 };
+        obstacle.motion();
     }
     //uther.positionX = Math.round((unitLastPos + (uther.positionX - unitLastPos) * interp));
     clearCanvas();

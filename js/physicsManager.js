@@ -27,7 +27,7 @@ let Physics = new Map([
     ['jumpPower', 2.2],
     ['power', 0.5],
     ['velocity', 0.006],
-    ['motion', 0.5]
+    ['motion', -0.4]
 ]);
 
 // Extanding =============================================================== //
