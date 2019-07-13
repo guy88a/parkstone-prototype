@@ -24,10 +24,10 @@ let Physics = new Map([
     ['force', 1],
     ['gravity', true],
     ['ground', 750],
-    ['jumpPower', 2.2],
+    ['jumpPower', 2.5],
     ['power', 0.5],
     ['velocity', 0.006],
-    ['motion', -0.4]
+    ['motion', -0.6]
 ]);
 
 // Extanding =============================================================== //
@@ -57,6 +57,9 @@ function setPhysicsProtos() {
         }
 
         this.velocityY += gravFx * delta;
+        if(this.velocityY > 1) {
+            this.velocityY = 1;
+        }
     }
 
     GameObject.prototype.motion = function(setVelocity = true) {

@@ -217,12 +217,13 @@ function draw(interp, delta, ctx = CTX) {
         var gom = getGameObjects();
         uther = getGameObject('Unit', 'Hero');
         uther.animate = true;
-        uther.position = { x: 0, y: 245 };
-        uther.velocity = { x: unitVelocity, y: 0 };
+        uther.position = { x: 100, y: 245 };
+        //uther.velocity = { x: unitVelocity, y: 0 };
         uther.width = uther.width * -1;
 
         obstacle = getGameObject('Object', 'Obstacle');
         obstacle.position = { x: 500, y: 245 };
+        obstacle.velocity = { x: unitVelocity, y: 0 };
         obstacle.motion();
     }
     //uther.positionX = Math.round((unitLastPos + (uther.positionX - unitLastPos) * interp));
