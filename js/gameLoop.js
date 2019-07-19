@@ -8,15 +8,21 @@ import log from './log.js';
 import { getGameAssets, } from './loader.js';
 import { getGameObjects, getGameObject } from './objectsManager.js';
 
+//for tests
+import { detectCollision } from './physicsManager.js';
+
 // Config ================================================================== //
 const EL_CANVAS = document.getElementById('game-canvas');
 const CTX = EL_CANVAS.getContext('2d');
 const UI_FPS = document.getElementById('fps-log');
 const UI_CHILL = document.getElementById('chill-log');
+const UI_COLL = document.getElementById('collisions-log');
 
 var hero = getGameAssets('loaded')['Hero'];
 var uther;
 let obstacle;
+let collisions = 0;
+let collided = false;
 
 let unitPos = 0;
 let unitPosY = 0;
@@ -62,6 +68,20 @@ function mainLoop(timestamp) {
         requestAnimationFrame(mainLoop);
         return;
     }
+
+    /* test */
+    if(detectCollision(uther, obstacle)) {
+        detectCollision(uther, obstacle);
+        if(!collided) {
+            collided = true;
+            collisions++;
+        }
+    } else {
+        if(collided) {
+            collided = false;
+        }
+    }
+    /* test */
 
     // update data
     setDelta(calcDelta(timestamp));
@@ -167,7 +187,7 @@ function update(delta, callback, timestamp) {
         uther.animate = true;
         uther.position = { x: 0, y: 245 };
         uther.velocityX = unitVelocity;
-        uther.width = uther.width * -1;
+        //uther.width = uther.width * -1;
 
         obstacle = getGameObject('Object', 'Obstacle');
         //obstacle.velocityX = unitVelocity;
@@ -219,10 +239,10 @@ function draw(interp, delta, ctx = CTX) {
         uther.animate = true;
         uther.position = { x: 100, y: 245 };
         //uther.velocity = { x: unitVelocity, y: 0 };
-        uther.width = uther.width * -1;
+        //uther.width = uther.width * -1;
 
         obstacle = getGameObject('Object', 'Obstacle');
-        obstacle.position = { x: 500, y: 245 };
+        obstacle.position = { x: 1000, y: 445 };
         obstacle.velocity = { x: unitVelocity, y: 0 };
         obstacle.motion();
     }
@@ -241,6 +261,7 @@ function draw(interp, delta, ctx = CTX) {
 
     printFPS();
     printChill();
+    printCollisions();
 }
 
 function clearCanvas(canvas = EL_CANVAS, ctx = CTX) {
@@ -263,6 +284,10 @@ function printFPS() {
 
 function printChill() {
     UI_CHILL.innerHTML = `Chills : ${timesChilled}`;
+}
+
+function printCollisions() {
+    UI_COLL.innerHTML = `Collisions : ${collisions}`;
 }
 
 // Loop Manager ============================================================ //

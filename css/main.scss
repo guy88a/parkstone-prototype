@@ -48,6 +48,25 @@ $canvas-bg: #afe2ff;
         
     }
 
+    &__logs--game {
+        position: absolute;
+        min-width: 100px;
+        height: 28px;
+        top: 2px;
+        right: 2px;
+        padding: 5px;
+
+        color: #e2e2e2;
+        font-size: 12px;
+        line-height: 15px;
+        text-align: center;
+
+        background-color: $logs-bg;
+        border: 2px solid $logs-border;
+        box-sizing: border-box;
+        
+    }
+
     &__canvas {
         background-color: $canvas-bg;
     }
