@@ -9,7 +9,7 @@ import { getGameAssets, } from './loader.js';
 import { getGameObjects, getGameObject } from './objectsManager.js';
 
 //for tests
-import { detectCollision } from './physicsManager.js';
+import { detectBoxCollision } from './physicsManager.js';
 
 // Config ================================================================== //
 const EL_CANVAS = document.getElementById('game-canvas');
@@ -68,20 +68,6 @@ function mainLoop(timestamp) {
         requestAnimationFrame(mainLoop);
         return;
     }
-
-    /* test */
-    if(detectCollision(uther, obstacle)) {
-        detectCollision(uther, obstacle);
-        if(!collided) {
-            collided = true;
-            collisions++;
-        }
-    } else {
-        if(collided) {
-            collided = false;
-        }
-    }
-    /* test */
 
     // update data
     setDelta(calcDelta(timestamp));
@@ -232,6 +218,23 @@ function stepUpdate() {
 
 // Draw ==================================================================== //
 function draw(interp, delta, ctx = CTX) {
+
+    clearCanvas();
+
+    /* test 
+    if(detectBoxCollision(uther, obstacle)) {
+        //detectBoxCollision(uther, obstacle);
+        if(!collided) {
+            collided = true;
+            collisions++;
+        }
+    } else {
+        if(collided) {
+            collided = false;
+        }
+    }
+    /* test */
+
     //let imageLeft = Math.round((unitLastPos + (unitPos - unitLastPos) * interp));
     if(!uther) {
         var gom = getGameObjects();
