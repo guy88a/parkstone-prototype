@@ -80,8 +80,8 @@ export default class Unit extends GameObject {
     }
 
     // Methods
-    draw(context, delta) {
-        if(this.anim) {
+    draw(context, delta, isPixelCheck) {
+        if(this.anim && !isPixelCheck) {
             if(this.hang) {
                 this.settings.spritesheet.pos = 1;
             } else {

@@ -69,6 +69,20 @@ function mainLoop(timestamp) {
         return;
     }
 
+    /* test */
+    if(detectBoxCollision(uther, obstacle)) {
+        detectBoxCollision(uther, obstacle);
+        if(!collided) {
+            collided = true;
+            collisions++;
+        }
+    } else {
+        if(collided) {
+            collided = false;
+        }
+    }
+    /* test */
+
     // update data
     setDelta(calcDelta(timestamp));
     setLastFrameTs(timestamp);
@@ -218,23 +232,6 @@ function stepUpdate() {
 
 // Draw ==================================================================== //
 function draw(interp, delta, ctx = CTX) {
-
-    clearCanvas();
-
-    /* test 
-    if(detectBoxCollision(uther, obstacle)) {
-        //detectBoxCollision(uther, obstacle);
-        if(!collided) {
-            collided = true;
-            collisions++;
-        }
-    } else {
-        if(collided) {
-            collided = false;
-        }
-    }
-    /* test */
-
     //let imageLeft = Math.round((unitLastPos + (unitPos - unitLastPos) * interp));
     if(!uther) {
         var gom = getGameObjects();

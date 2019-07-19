@@ -100,7 +100,7 @@ export function getGravityEffect(power) {
 }
 
 export function detectBoxCollision(obj1, obj2) {
-    let source = {
+    /*let source = {
         x: obj1.positionX,
 	    y: obj1.positionY,
 	    width: obj1.width,
@@ -114,14 +114,14 @@ export function detectBoxCollision(obj1, obj2) {
 	    height: obj2.height,
 	    pixelmap: collisionDetector.buildPixelMap(EL_CANVAS)
     }
-    return collisionDetector.hitTest(source, target);
-    /*let obj1W = obj1.settings ? obj1.spritesheetSize('frame').w : obj1.width;
+    return collisionDetector.hitTest(source, target);*/
+    let obj1W = obj1.settings ? obj1.spritesheetSize('frame').w : obj1.width;
     let obj2W = obj2.settings ? obj2.spritesheetSize('frame').w : obj2.width;
     return (
         ( ((obj1.positionX + obj1W) > obj2.positionX) && (obj1.positionX < (obj2.positionX + obj2W)) )
         &&
         ( ((obj1.positionY + obj1.height) > obj2.positionY) && (obj1.positionY < (obj2.positionY + obj2.height)) )
-    );*/
+    );
 }
 
 // Setters & Getters ======================================================= //
