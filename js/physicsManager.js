@@ -99,29 +99,8 @@ export function getGravityEffect(power) {
     return calcGravityEffect(power);
 }
 
-export function detectBoxCollision(obj1, obj2) {
-    /*let source = {
-        x: obj1.positionX,
-	    y: obj1.positionY,
-	    width: obj1.width,
-	    height: obj1.height,
-	    pixelmap: collisionDetector.buildPixelMap(EL_CANVAS)
-    }
-    let target = {
-        x: obj2.positionX,
-	    y: obj2.positionY,
-	    width: obj2.width,
-	    height: obj2.height,
-	    pixelmap: collisionDetector.buildPixelMap(EL_CANVAS)
-    }
-    return collisionDetector.hitTest(source, target);*/
-    let obj1W = obj1.settings ? obj1.spritesheetSize('frame').w : obj1.width;
-    let obj2W = obj2.settings ? obj2.spritesheetSize('frame').w : obj2.width;
-    return (
-        ( ((obj1.positionX + obj1W) > obj2.positionX) && (obj1.positionX < (obj2.positionX + obj2W)) )
-        &&
-        ( ((obj1.positionY + obj1.height) > obj2.positionY) && (obj1.positionY < (obj2.positionY + obj2.height)) )
-    );
+export function detectBoxCollision(source, target) {
+    return isColliding(source, target);
 }
 
 // Setters & Getters ======================================================= //
@@ -145,4 +124,41 @@ function calcGravityEffect(power = Physics.get('power')) {
 
 function getPoweredValue(value) {
     return value * Physics.get('power');
+}
+
+function isColliding(source, target) {
+    let endCoords = getEndCoords(source, target);
+
+    if(endCoords[0] > target.positionX && source.positionX < endCoords[2] &&
+       endCoords[1] > target.positionY && source.positionY < endCoords[3])
+    {
+        let cStartX = source.positionX < target.positionX ? target.positionX : source.positionX;
+        let cStartY = source.positionY < target.positionY ? target.positionY : source.positionY;
+        let cEndX = endCoords[0] > endCoords[2] ? endCoords[2] : endCoords[0];
+        let cEndY = endCoords[1] > endCoords[3] ? endCoords[3] : endCoords[1];
+    
+        return [
+            cStartX,
+            cStartY,
+            cEndX - cStartX,
+            cEndY - cStartY
+        ];
+    } else {
+        return false;
+    }
+}
+
+function getEndCoords(source, target) {
+    let sourceW = source.settings ? source.spritesheetSize('frame').w : source.width;
+    let targetW = target.settings ? target.spritesheetSize('frame').w : target.width;
+    return [
+        source.positionX + sourceW,
+        source.positionY + source.height,
+        target.positionX + targetW,
+        target.positionY + target.height
+    ]
+}
+
+function getCollisionArea(source, target) {
+    
 }
