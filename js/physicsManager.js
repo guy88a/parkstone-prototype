@@ -144,7 +144,7 @@ function isColliding(source, target) {
             cEndY - cStartY
         ];
     } else {
-        return false;
+        return [];
     }
 }
 
