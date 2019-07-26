@@ -8,6 +8,16 @@
 import log from '../log.js';
 
 // Config ================================================================== //
+const keyByCharNew = {
+    c:  "collision",
+    df: "default",
+    fs: "frameSize",
+    n:  "name",
+    s: "spritesheet",
+    t:  "type",
+    ts: "timestep",
+}
+
 const keyByChar = {
     a: "animated",
     c: "collision",
@@ -75,6 +85,42 @@ function getDataFromName(imageName) {
     return data;
 }
 
+/**
+ * generate a unit's name by image's name
+ * - returns { animated, collision, spritesheet, type }
+ * @param {String} imageName | file name (extension excluded)
+ */
+function getDataFromNameNew(imageName) {
+    let data = {};
+    let params = imageName.split('@');
+
+    // iterate trhoguh all parematers
+    for(var i = 0; i < params.length; i++) {
+        let keyValue = params[i].split('=');
+        let keyName = keyByCharNew[keyValue[0]];
+
+        // check for sub parameters - if any, continue after iteration
+        if(keyValue[1].includes('-')) {
+            let subParams = keyValue[1].split('-');
+            data[keyName] = {};
+            for(var si = 0; si < subParams.length; si++) {
+                let subKeyValue = subParams[si].split('_');
+                data[keyName][keyByCharNew[subKeyValue[0]]] = subKeyValue[1];
+            }
+            continue;
+        }
+
+        // set normal parameter
+        if(keyName === 'collision') {
+            data[keyName] = parseInt(keyValue[1]);
+        } else {
+            data[keyName] = keyValue[1];
+        }
+    }
+
+    return data;
+}
+
 function getUnitSettings(imageName) {
 
 }
@@ -103,14 +149,14 @@ function isValidFilename(fileName) {
  * @param {String} settings 
  */
 function generateSettings({spritesheet, animations}) {
-    spritesheet = getSpritesheetDate(spritesheet);
+    spritesheet = getSpritesheetData(spritesheet);
     return {
         spritesheet: spritesheet,
         animation: {}
     }
 }
 
-function getSpritesheetDate(spriteSettings) {
+function getSpritesheetData(spriteSettings) {
     let spriteParams = spriteSettings.split('f');
     let source = spriteParams[0];
     let frame = spriteParams[1];
@@ -149,6 +195,8 @@ function getSpritesheetDate(spriteSettings) {
         next: timestep
     }
 }
+
+function getSpritesheetDataNew()
 
 function splitParamValue(paramValue, splitChar = 'x') {
     return paramValue.includes(splitChar) ?

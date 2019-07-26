@@ -95,7 +95,7 @@ function mainLoop(timestamp) {
         update(timestep, null, timestamp);
         stepUpdate();
         // Overload check
-        if(++numUpdateSteps >= 240) {
+        if(++numUpdateSteps >= 100) {
             chill();
             break;
         }
