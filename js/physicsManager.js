@@ -99,8 +99,16 @@ export function getGravityEffect(power) {
     return calcGravityEffect(power);
 }
 
-export function detectBoxCollision(source, target) {
-    return isColliding(source, target);
+export function detectBoxCollision(source, target, ctx) {
+    let areaData = isColliding(source, target);
+    if(areaData.length != 0) {
+        let sImgData = getObjectImageData(ctx, source, areaData);
+        let tImgData = getObjectImageData(ctx, target, areaData);
+        let pixelHit = checkPixelCollision(sImgData, tImgData);
+        return pixelHit;
+    } else {
+        return false;
+    }
 }
 
 // Setters & Getters ======================================================= //
@@ -126,6 +134,13 @@ function getPoweredValue(value) {
     return value * Physics.get('power');
 }
 
+/**
+ * 
+ * @param {GameObject} source 
+ * @param {GameObject} target 
+ * returns the collision area:
+ * - [x, y, w, h]
+ */
 function isColliding(source, target) {
     let endCoords = getEndCoords(source, target);
 
@@ -159,6 +174,21 @@ function getEndCoords(source, target) {
     ]
 }
 
-function getCollisionArea(source, target) {
-    
+function getObjectImageData(ctx, gameObject, areaData) {
+    ctx.clearRect(areaData[0], areaData[1], areaData[2], areaData[3])
+    gameObject.draw(ctx, 0, true);
+    return ctx.getImageData(areaData[0], areaData[1], areaData[2], areaData[3]);
+}
+
+function checkPixelCollision(sData, tData) {
+    let l = sData.data.length;
+    let r = 4 * 5;
+    for(var i = 0; i < l; i += r) {
+        if(!sData.data[i+3] || !tData.data[i+3]) {
+            continue;
+        } else {
+            return true;
+        }
+    }
+    return false;
 }

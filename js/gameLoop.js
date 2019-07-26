@@ -70,8 +70,7 @@ function mainLoop(timestamp) {
     }
 
     /* test */
-    if(detectBoxCollision(uther, obstacle)) {
-        detectBoxCollision(uther, obstacle);
+    if(detectBoxCollision(uther, obstacle, CTX)) {
         if(!collided) {
             collided = true;
             collisions++;
