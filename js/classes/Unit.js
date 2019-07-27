@@ -85,7 +85,7 @@ export default class Unit extends GameObject {
             if(this.hang) {
                 this.settings.spritesheet.pos = 1;
             } else {
-                this.settings.spritesheet.pos = this.getSpritesheetPosition(delta, this.spritesheetStep(), this.spritesheetNextStep());
+                this.settings.spritesheet.pos = this.getUpdatedSpritesheetPosition(delta, this.spritesheetStep(), this.spritesheetNextStep());
             }
         }
 

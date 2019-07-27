@@ -20,9 +20,10 @@ function setAnimationsProtos() {
         this.anim = true;
     }
 
-    Unit.prototype.getSpritesheetPosition = function(delta, stepRate, next) {
-        if(next - delta <= 0) {
-            this.settings.spritesheet.next = stepRate;
+    Unit.prototype.getUpdatedSpritesheetPosition = function(delta, stepRate, next) {
+        next -= delta;
+        if(next <= 0) {
+            this.settings.spritesheet.next = stepRate + next;
             this.settings.spritesheet.pos++;
 
             if((this.settings.spritesheet.pos * this.spritesheetSize('frame').w) > this.spritesheetSize('source').w - 1 /*this.spritesheetSize('frame').w*/) {
@@ -61,6 +62,3 @@ export default function activateAnimations() {
 
 
 // Misc ==================================================================== //
-function getSpritesheetPosition(delta) {
-
-}

@@ -112,17 +112,15 @@ function getDataFromNameNew(imageName) {
 
         // set normal parameter
         if(keyName === 'collision') {
+            // integer values
             data[keyName] = parseInt(keyValue[1]);
         } else {
+            // string values
             data[keyName] = keyValue[1];
         }
     }
 
     return data;
-}
-
-function getUnitSettings(imageName) {
-
 }
 
 // Misc ==================================================================== //
@@ -195,8 +193,6 @@ function getSpritesheetData(spriteSettings) {
         next: timestep
     }
 }
-
-function getSpritesheetDataNew()
 
 function splitParamValue(paramValue, splitChar = 'x') {
     return paramValue.includes(splitChar) ?
