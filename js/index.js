@@ -12,6 +12,7 @@ const IMG_GROUND = 'ground_t-a_a-0.png';
 const IMG_BACKGROUND = 'background_t-a_a-1.png';
 const IMG_CLOUDS = 'clouds_t-a_a-1.png';
 const IMG_UNIT = 'hero_t-u_s-676x205f4_c-1.png';
+const IMG_UNIT_NEW = 'uther@t=unit@s=fs_169x205-ts_1000x5-df_0x5@c=1.png';
 const IMG_OBSTACLE = 'obstacle_t-o_c-1.png';
 
 // Setters & Getters ======================================================= //
@@ -42,7 +43,7 @@ function onLoadInvoker() {
 initObjectsManager(gameObjsArr); // must be invoked after assets were loaded, and before game loop  was initiated
 */
 
-defineAssets([IMG_GROUND, IMG_BACKGROUND, IMG_CLOUDS, IMG_UNIT, IMG_OBSTACLE]);
+defineAssets([IMG_UNIT_NEW, IMG_GROUND, IMG_BACKGROUND, IMG_CLOUDS, IMG_UNIT, IMG_OBSTACLE]);
 initGame(onLoadInvoker);
 
 var gom = getGameObjects();

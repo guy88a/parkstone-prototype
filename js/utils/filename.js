@@ -82,6 +82,8 @@ function getDataFromName(imageName) {
         data.settings = generateSettings({ spritesheet: data.spritesheet});
     }
 
+    let newSpritesheet = generateNewSpritesheet(imageName);
+
     return data;
 }
 
@@ -91,10 +93,17 @@ function getDataFromName(imageName) {
  * @param {String} imageName | file name (extension excluded)
  */
 function getDataFromNameNew(imageName) {
+    if(imageName.indexOf('@') < 0) { return {}; }
+
     let data = {};
     let params = imageName.split('@');
 
-    // iterate trhoguh all parematers
+    // set name
+    data['name'] = params[0];
+    // then remove name from params
+    params.shift();
+
+    // iterate through all remaining parematers
     for(var i = 0; i < params.length; i++) {
         let keyValue = params[i].split('=');
         let keyName = keyByCharNew[keyValue[0]];
@@ -146,12 +155,16 @@ function isValidFilename(fileName) {
  * 
  * @param {String} settings 
  */
-function generateSettings({spritesheet, animations}) {
+function generateSettings({spritesheet, animations = {}}) {
     spritesheet = getSpritesheetData(spritesheet);
     return {
         spritesheet: spritesheet,
-        animation: {}
+        animation: animations
     }
+}
+
+function generateNewSpritesheet(imagename) {
+    return getDataFromNameNew(imagename).spritesheet;
 }
 
 function getSpritesheetData(spriteSettings) {
