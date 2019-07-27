@@ -12,8 +12,9 @@ const keyByCharNew = {
     c:  "collision",
     df: "default",
     fs: "frameSize",
+    m:  "motion",
     n:  "name",
-    s: "spritesheet",
+    s:  "spritesheet",
     t:  "type",
     ts: "timestep",
 }
@@ -204,6 +205,26 @@ function getSpritesheetData(spriteSettings) {
         direction: 1,
         timestep: timestep,
         next: timestep
+    }
+}
+
+function getSpritesheetDataNew(spriteSettings) {
+    let params = spriteSettings.includes('-') ? spriteSettings.split('-') : spriteSettings;
+
+    let sourceSize = { x: 0, y: 0 };
+    let frameSize = { x: 0, y: 0 };
+    let pos = 0;
+    let timestep = 0;
+    let next = 0;
+    let timeline = { default: [0,5] };
+
+    return {
+        frameSize: frameSize,
+        pos: pos,
+        direction: 1,
+        timestep: timestep,
+        next: next,
+        timeline: timeline
     }
 }
 
