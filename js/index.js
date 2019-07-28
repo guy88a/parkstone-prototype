@@ -43,7 +43,7 @@ function onLoadInvoker() {
 initObjectsManager(gameObjsArr); // must be invoked after assets were loaded, and before game loop  was initiated
 */
 
-defineAssets([IMG_UNIT_NEW, IMG_GROUND, IMG_BACKGROUND, IMG_CLOUDS, IMG_UNIT, IMG_OBSTACLE]);
+defineAssets([IMG_GROUND, IMG_BACKGROUND, IMG_CLOUDS, IMG_UNIT, IMG_OBSTACLE]);
 initGame(onLoadInvoker);
 
 var gom = getGameObjects();

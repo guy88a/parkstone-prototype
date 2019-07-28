@@ -83,7 +83,7 @@ function getDataFromName(imageName) {
         data.settings = generateSettings({ spritesheet: data.spritesheet});
     }
 
-    let newSpritesheet = generateNewSpritesheet(imageName);
+    let newSpritesheet = getSpritesheetDataNew(generateNewSpritesheet('uther@t=unit@s=fs_169x205-ts_1000x5-df_0x5@c=1'));
 
     return data;
 }
@@ -209,22 +209,52 @@ function getSpritesheetData(spriteSettings) {
 }
 
 function getSpritesheetDataNew(spriteSettings) {
-    let params = spriteSettings.includes('-') ? spriteSettings.split('-') : spriteSettings;
-
-    let sourceSize = { x: 0, y: 0 };
-    let frameSize = { x: 0, y: 0 };
-    let pos = 0;
-    let timestep = 0;
-    let next = 0;
-    let timeline = { default: [0,5] };
-
-    return {
-        frameSize: frameSize,
-        pos: pos,
+    let data = {
+        frameSize: { x: 0, y: 0 },
+        pos: { x: 0, y: 0 },
         direction: 1,
-        timestep: timestep,
-        next: next,
-        timeline: timeline
+        timestep: 0,
+        next: 0,
+        timeline: { default: [0,5] },
+        currentAnimation: 'default'
+    }
+
+    for(var prop in spriteSettings) {
+        if(spriteSettings.hasOwnProperty(prop)) {
+            let value = getSpritesheetPropValue(prop, spriteSettings[prop]);
+            if(prop === 'default') {
+                data.timeline.default = value;
+            } else {
+                data[prop] = value;
+            }
+        }
+    }
+
+    data.next = data.timestep;
+
+    return data;
+}
+
+function getSpritesheetPropValue(key, value) {
+    let values = splitParamValue(value);
+
+    for(let i = 0; i < values.length; i++) {
+        if(!isNaN(values[i])) {
+            values[i] = parseInt(values[i])
+        };
+    }
+
+    if(key === 'frameSize' || key === 'pos') {
+        return {
+            x: values[0],
+            y: values[1]
+        };
+    }
+    if(key === 'timestep' || key === 'next') {
+        return values[0] / values[1];
+    }
+    if(key === 'default') {
+        return [values[0],values[1]];
     }
 }
 
