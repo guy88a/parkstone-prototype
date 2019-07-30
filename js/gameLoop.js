@@ -20,6 +20,12 @@ const UI_COLL = document.getElementById('collisions-log');
 
 var hero = getGameAssets('loaded')['Hero'];
 var uther;
+var background;
+var background2;
+var clouds;
+var clouds2;
+var ground = getGameAssets('loaded','ground');
+
 let obstacle;
 let collisions = 0;
 let collided = false;
@@ -197,6 +203,10 @@ function update(delta, callback, timestamp) {
     //uther.positionX += Math.round(unitVelocity * delta);
     uther.updatePosition(delta);
     obstacle.updatePosition(delta);
+    background.updatePosition(delta);
+    background2.updatePosition(delta);
+    clouds.updatePosition(delta);
+    clouds2.updatePosition(delta);
     unitPos = uther.positionX;
     if(uther.positionX >= limit || uther.positionX <= 0) {
         newDirTS = timestamp;
@@ -211,6 +221,22 @@ function update(delta, callback, timestamp) {
 
     if(obstacle.positionX < (0 - obstacle.width)) {
         obstacle.positionX = EL_CANVAS.clientWidth;
+    }
+
+    if(background.positionX < (0 - background.width)) {
+        background.positionX = EL_CANVAS.clientWidth;
+    }
+
+    if(background2.positionX < (0 - background2.width)) {
+        background2.positionX = EL_CANVAS.clientWidth;
+    }
+
+    if(clouds.positionX < (0 - clouds.width)) {
+        clouds.positionX = EL_CANVAS.clientWidth;
+    }
+
+    if(clouds2.positionX < (0 - clouds2.width)) {
+        clouds2.positionX = EL_CANVAS.clientWidth;
     }
 
     /*unitLastPos = unitPos;
@@ -234,11 +260,29 @@ function draw(interp, delta, ctx = CTX) {
     //let imageLeft = Math.round((unitLastPos + (unitPos - unitLastPos) * interp));
     if(!uther) {
         var gom = getGameObjects();
+
+        background = gom['Assets'].get('Background');
+        background2 = gom['Assets'].get('Backgroundb');
+        ground = gom['Assets'].get('Ground');
+        clouds = gom['Assets'].get('Clouds');
+        clouds2 = gom['Assets'].get('Cloudsb');
+        background.position = { x: 0, y: 610 };
+        background.velocity = { x: -0.4, y: 0 };
+        background2.position = { x: 1400, y: 610 };
+        background2.velocity = { x: -0.4, y: 0 };
+        ground.position = { x: 0, y: 665 };
+        clouds.position = { x: 0, y: 0 };
+        clouds.velocity = { x: -0.1, y: 0 };
+        clouds2.velocity = { x: -0.1, y: 0 };
+        clouds2.position = { x: 1400, y: 0 };
+        //background.motion();
+
         uther = getGameObject('Unit', 'Hero');
         uther.animate = true;
         uther.position = { x: 100, y: 245 };
         //uther.velocity = { x: unitVelocity, y: 0 };
         //uther.width = uther.width * -1;
+        //uther.motion(false);
 
         obstacle = getGameObject('Object', 'Obstacle');
         obstacle.position = { x: 1000, y: 445 };
@@ -268,12 +312,14 @@ function clearCanvas(canvas = EL_CANVAS, ctx = CTX) {
 }
 
 function drawBackground(ctx = CTX) {
-    const background = getGameAssets('loaded','background');
-    const ground = getGameAssets('loaded','ground');
-    const clouds = getGameAssets('loaded','clouds');
-    ctx.drawImage(background ,0, 585);
-    ctx.drawImage(ground ,0, 655);
-    ctx.drawImage(clouds ,0, 50);
+    //ctx.drawImage(background ,0, 585);
+    background.draw(ctx);
+    background2.draw(ctx);
+    clouds.draw(ctx);
+    clouds2.draw(ctx);
+    ground.draw(ctx);
+
+    //ctx.drawImage(ground ,0, 655);
 }
 
 // Misc ==================================================================== //

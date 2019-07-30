@@ -69,7 +69,9 @@ function setPhysicsProtos() {
     GameObject.prototype.motion = function(setVelocity = true) {
         this.motion = true;
         if(setVelocity) {
-            this.motionUpdate();
+            //this.motionUpdate();
+            let m = parseFloat(Physics.get('motion'));
+            this.velocityX = m;
         }
     }
 
