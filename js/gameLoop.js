@@ -275,8 +275,8 @@ function draw(interp, delta, ctx = CTX) {
         clouds.velocity = { x: -0.1, y: 0 };
         clouds2.velocity = { x: -0.1, y: 0 };
         clouds2.position = { x: 1400, y: 0 };
-        background.motion(true, 0.7);
-        background2.motion(true, 0.7);
+        background.motion(true, 0.5);
+        background2.motion(true, 0.5);
         clouds.motion(true, 0.15);
         clouds2.motion(true, 0.15);
 
