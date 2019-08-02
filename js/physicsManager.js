@@ -30,6 +30,7 @@ let Physics = new Map([
     ['ground', 750],
     ['jumpPower', 2.5],
     ['power', 0.5],
+    ['gravityPower', 0.6],
     ['velocity', 0.006],
     ['motion', -0.6]
 ]);
@@ -66,11 +67,12 @@ function setPhysicsProtos() {
         }
     }
 
-    GameObject.prototype.motion = function(setVelocity = true) {
+    GameObject.prototype.motion = function(setVelocity = true, adjustment = 0) {
         this.motion = true;
         if(setVelocity) {
             //this.motionUpdate();
             let m = parseFloat(Physics.get('motion'));
+            m = adjustment ? m * adjustment : m;
             this.velocityX = m;
         }
     }
@@ -103,7 +105,7 @@ export function getGravityEffect(power) {
 
 export function detectBoxCollision(source, target, ctx) {
     let areaData = isColliding(source, target);
-    if(areaData.length != 0) {
+    if(areaData.length != 0 && areaData[2] >= 1 && areaData[3] >= 1) {
         let sImgData = getObjectImageData(ctx, source, areaData);
         let tImgData = getObjectImageData(ctx, target, areaData);
         let pixelHit = checkPixelCollision(sImgData, tImgData);
@@ -128,7 +130,7 @@ function motionDecrease(amount = Physics.get('motion') * 0.1) {
 }
 
 // Misc ==================================================================== //
-function calcGravityEffect(power = Physics.get('power')) {
+function calcGravityEffect(power = Physics.get('gravityPower')) {
     return (Physics.get('velocity') * power);
 }
 

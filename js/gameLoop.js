@@ -266,16 +266,19 @@ function draw(interp, delta, ctx = CTX) {
         ground = gom['Assets'].get('Ground');
         clouds = gom['Assets'].get('Clouds');
         clouds2 = gom['Assets'].get('Cloudsb');
-        background.position = { x: 0, y: 610 };
+        background.position = { x: 0, y: 600 };
         background.velocity = { x: -0.4, y: 0 };
-        background2.position = { x: 1400, y: 610 };
+        background2.position = { x: 1400, y: 600 };
         background2.velocity = { x: -0.4, y: 0 };
         ground.position = { x: 0, y: 665 };
         clouds.position = { x: 0, y: 0 };
         clouds.velocity = { x: -0.1, y: 0 };
         clouds2.velocity = { x: -0.1, y: 0 };
         clouds2.position = { x: 1400, y: 0 };
-        //background.motion();
+        background.motion(true, 0.7);
+        background2.motion(true, 0.7);
+        clouds.motion(true, 0.15);
+        clouds2.motion(true, 0.15);
 
         uther = getGameObject('Unit', 'Hero');
         uther.animate = true;
