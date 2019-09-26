@@ -145,5 +145,3 @@ function getAssetName(imageName) {
     }
     return capFirstChar(name);
 }
-
-var a = "asd";
